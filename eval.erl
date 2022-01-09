@@ -2,21 +2,21 @@
 -export([evaluate/1]).
 
 evaluate([Token | _Rest]) ->
-  {Expr, _Value, TokenRest} = Token,
+  {Expr, _Value, Body} = Token,
   if 
     Expr == calc ->
-      calculate(TokenRest);
+      calculate(Body);
     true ->
       ok
   end.
 
 calculate([Token | _Rest]) ->
-  {Expr, Value, TokenRest} = Token,
+  {Expr, Value, Body} = Token,
   if 
     (Expr == operator) and (Value == plus) ->
-      plus(TokenRest);
+      plus(Body);
     (Expr == operator) and (Value == minus) ->
-      minus(TokenRest);
+      minus(Body);
     true ->
       ok
   end.
