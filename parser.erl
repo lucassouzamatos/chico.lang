@@ -16,7 +16,6 @@ parse_group([Token | Rest]) ->
   end.
 
 parse_operator_group([]) -> [];
-
 parse_operator_group([Token | Rest]) ->
   {Expr, Body} = Token,
   if
