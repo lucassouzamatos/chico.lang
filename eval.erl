@@ -7,7 +7,8 @@ evaluate([Token | _Rest]) ->
     Expr == calc ->
       calculate(Body);
     true ->
-      ok
+      trace_error(Token),
+      exit
   end.
 
 trace_error(Token) -> 

@@ -10,7 +10,7 @@ parse_group([Token | Rest]) ->
     Expr == calc ->
       [{Expr, Value, parse_calculate_group(Rest)}];
     true ->
-      []
+      [{error, "the program must be initialized with calc", []}]
   end.
 
 parse_calculate_group([]) -> [];

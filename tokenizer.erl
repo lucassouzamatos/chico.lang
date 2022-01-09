@@ -21,7 +21,7 @@ get_token(V) when V == "+" ->
 get_token(V) when V == "-" -> 
   match_minus(V);
 get_token(V) ->
-  match_string(V).
+  match_unexpected_token(V).
 
 match_breakline(_V) -> {breakline, none}.
 match_calc(_V) -> {calc, none}.
@@ -33,5 +33,5 @@ match_minus(_V) -> {operator, minus}.
 % Match type numbers
 match_integer(V) -> {integer, V}.
 
-% Match string
-match_string(V) -> {string, V}.
+% Match unexpected
+match_unexpected_token(V) -> {error, "the token " ++ V ++ " specified not is ok"}.
