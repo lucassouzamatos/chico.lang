@@ -20,6 +20,10 @@ get_token(V) when V == "+" ->
   match_plus(V);
 get_token(V) when V == "-" -> 
   match_minus(V);
+get_token(V) when V == "/" -> 
+  match_division(V);
+get_token(V) when V == "*" -> 
+  match_multiplication(V);
 get_token(V) ->
   match_unexpected_token(V).
 
@@ -29,6 +33,8 @@ match_calc(_V) -> {calc, none}.
 % Match math operators
 match_plus(_V) -> {operator, plus}.
 match_minus(_V) -> {operator, minus}.
+match_multiplication(_V) -> {operator, multiplication}.
+match_division(_V) -> {operator, division}.
 
 % Match type numbers
 match_integer(V) -> {integer, V}.
