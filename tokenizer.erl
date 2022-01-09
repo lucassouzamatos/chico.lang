@@ -10,11 +10,18 @@ tokenize(Source, Position) ->
   [L | Rest] = Source,
   [get_token(L)] ++ tokenize(Rest, Position + 1).
 
-get_token(Value) when is_integer(Value) ->
-  {integer, Value};
 get_token(Value) ->
-  if Value == "\n" ->
+  if 
+    Value == "\n" ->
        {breakline, none};
-     true ->
-       {string, Value}
+    Value == "calc" ->
+      {calc, none};
+    Value == "+" ->
+      {operator, plus};
+    Value == "-" ->
+      {operator, minus};
+    is_integer(Value) ->
+      {integer, Value};
+    true ->
+      {string, Value}
   end.
