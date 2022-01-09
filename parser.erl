@@ -5,24 +5,35 @@ parse(Tokens) -> parse_group(Tokens).
 
 parse_group([]) -> [];
 parse_group([Token | Rest]) -> 
-  {Expr, Body} = Token,
+  {Expr, Value} = Token,
   if 
     Expr == calc ->
-      [{Expr, Body, parse_group(Rest)}];
-    Expr == operator ->
-      [{Expr, Body, parse_operator_group(Rest)}];
+      [{Expr, Value, parse_calculate_group(Rest)}];
     true ->
       []
   end.
 
+parse_calculate_group([]) -> [];
+parse_calculate_group([Token | Rest]) ->
+  {Expr, Value} = Token,
+  if 
+    Expr == operator -> 
+      [{Expr, Value, parse_operator_group(Rest)}];
+    true ->
+      [{error, "after calc must be declared the operator", []}]
+  end.
+
 parse_operator_group([]) -> [];
 parse_operator_group([Token | Rest]) ->
-  {Expr, Body} = Token,
+  {Expr, Value} = Token,
   if
     Expr == integer ->
-      [{Expr, Body}] ++ parse_operator_group(Rest);
+      [{Expr, Value}] ++ parse_operator_group(Rest);
+    % Todo: remove breakline from AST
+    Expr == breakline -> 
+      [];
     true -> 
-      []
+      [{error, "after operator must be declared the value", []}]
   end.
 
   

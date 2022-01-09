@@ -10,35 +10,37 @@ evaluate([Token | _Rest]) ->
       ok
   end.
 
+trace_error(Token) -> 
+  {_Expr, Value, _Body} = Token,
+  io:format("error: ~p ~n", [Value]). 
+
 calculate([Token | _Rest]) ->
   {Expr, Value, Body} = Token,
   if 
-    (Expr == operator) and (Value == plus) ->
-      plus(Body);
-    (Expr == operator) and (Value == minus) ->
-      minus(Body);
+    Expr == operator ->
+      operate(Body, Value);
+    (Expr == error) ->
+      trace_error(Token);
     true ->
       ok
   end.
 
-plus([]) -> 0;
-plus([Token | Rest]) ->
+operate([], Operator) ->
+  if 
+    (Operator == plus) or (Operator == minus) ->
+       0;
+     true -> 0
+  end;
+operate([Token | Rest], Operator) ->
   {Expr, Value} = Token,
   if 
-    Expr == integer ->
-      Value + plus(Rest);
+    (Expr == integer) and (Operator == plus) ->
+      Value + operate(Rest, Operator);
+    (Expr == integer) and (Operator == minus) ->
+      Value - operate(Rest, Operator);
+    Expr == error ->
+      trace_error(Token);
     true ->
-      Value
+      0
   end.
-
-minus([]) -> 0;
-minus([Token | Rest]) ->
-  {Expr, Value} = Token,
-  if 
-    Expr == integer ->
-      Value - plus(Rest);
-    true ->
-      Value
-  end.
-
 
