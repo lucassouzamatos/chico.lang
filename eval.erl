@@ -30,18 +30,25 @@ operate([], Operator) ->
   if 
     (Operator == plus) or (Operator == minus) ->
        0;
+    (Operator == division) or (Operator == multiplication) ->
+      1;
      true -> 0
   end;
-operate([Token | Rest], Operator) ->
-  {Expr, Value} = Token,
-  if 
-    (Expr == integer) and (Operator == plus) ->
-      Value + operate(Rest, Operator);
-    (Expr == integer) and (Operator == minus) ->
-      Value - operate(Rest, Operator);
-    Expr == error ->
-      trace_error(Token);
-    true ->
-      0
-  end.
-
+operate([{Expr, Value, Body} | _Rest], _Operator) when Expr == error ->
+  trace_error({Expr, Value, Body}),
+  exit;
+operate([{Expr} | _Rest], _Operator) when Expr /= integer ->
+  trace_error({error, "must be specified a valid integer", []}),
+  exit;
+operate([Token | Rest], Operator) when Operator == plus ->
+  {_Expr, Value} = Token,
+  Value + operate(Rest, Operator);
+operate([Token | Rest], Operator) when Operator == minus ->
+  {_Expr, Value} = Token,
+  Value - operate(Rest, Operator);
+operate([Token | Rest], Operator) when Operator == division ->
+  {_Expr, Value} = Token,
+  Value / operate(Rest, Operator);
+operate([Token | Rest], Operator) when Operator == multiplication ->
+  {_Expr, Value} = Token,
+  Value * operate(Rest, Operator).
