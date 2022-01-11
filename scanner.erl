@@ -10,6 +10,6 @@ convert_integers(V) ->
 
 scan() ->
   Source = io:get_line("ar>"),
-  Parsed = string:tokens(Source, " "),
+  Parsed = string:lexemes(Source, " " ++ [$\n]),
   lists:map(fun(T) -> convert_integers(T) end, Parsed).
 
