@@ -11,6 +11,24 @@ $ ar> calc + 2 2
 $ 4
 ```
 
+## Getting started
+
+First step for start is clone the project:
+```
+$ git clone https://github.com/lucassouzamatos/arithmetic-interpreter.git
+```
+
+After this, you should compile files:
+
+```
+$ make
+```
+
+And run the application:
+```
+$ make run
+```
+
 ## Gramar
 The BNF grammar follows this instructions above:
 
