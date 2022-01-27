@@ -3,6 +3,7 @@ all: compile
 compile: clean
 	mkdir ebin 
 	erl -make
+	cp ./app ./ebin/app
 
 clean:
 	rm -rf ebin
