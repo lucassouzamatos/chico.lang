@@ -1,4 +1,4 @@
--module(tokenizer).
+-module(ar_tokenizer).
 -export([tokenize/2, get_token/1]).
 
 % Prevent right hand error when Rest is not defined

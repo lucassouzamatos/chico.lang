@@ -1,4 +1,4 @@
--module(eval).
+-module(ar_eval).
 -export([evaluate/1]).
 
 evaluate([Token | _Rest]) ->

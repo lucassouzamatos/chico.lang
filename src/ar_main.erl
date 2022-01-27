@@ -1,10 +1,10 @@
--module(main).
+-module(ar_main).
 -export([execute/0]).
--import(scanner, [scan/0]).
--import(tokenizer, [tokenize/2]).
--import(parser, [parse/1]).
--import(erlang, [display/1]).
--import(eval, [evaluate/1]).
+-import(ar_scanner, [scan/0]).
+-import(ar_tokenizer, [tokenize/2]).
+-import(ar_parser, [parse/1]).
+-import(ar_erlang, [display/1]).
+-import(ar_eval, [evaluate/1]).
 
 execute() -> 
   Source = scan(),

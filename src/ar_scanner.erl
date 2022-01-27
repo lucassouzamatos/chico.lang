@@ -1,4 +1,4 @@
--module(scanner).
+-module(ar_scanner).
 -export([scan/0]).
 
 convert_integers(V) ->

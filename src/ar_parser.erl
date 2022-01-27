@@ -1,4 +1,4 @@
--module(parser).
+-module(ar_parser).
 -export([parse/1]).
 
 parse(Tokens) -> parse_group(Tokens).
