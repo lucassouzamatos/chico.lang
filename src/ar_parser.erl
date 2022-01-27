@@ -8,17 +8,22 @@ parse_group([Token | Rest]) ->
   {Expr, Value} = Token,
   if 
     Expr == calc ->
-      [{Expr, Value, parse_calculate_group(Rest)}];
+      [ValueGroupCalculate, ValueGroupCalculateRest] =  parse_calculate_group(Rest), 
+      [{Expr, Value, ValueGroupCalculate}] ++ parse_group(ValueGroupCalculateRest);
     true ->
-      [{error, "the program must be initialized with calc", []}]
+      nil  
   end.
+
+with_rest(Value, Rest) ->
+  [Value, Rest].
 
 parse_calculate_group([]) -> [];
 parse_calculate_group([Token | Rest]) ->
   {Expr, Value} = Token,
   if 
-    Expr == operator -> 
-      [{Expr, Value, parse_operator_group(Rest)}];
+    Expr == operator ->
+      [ValueGroupOperator, ValueGroupOperatorRest] =  parse_operator_group(Rest),
+      with_rest([{Expr, Value, ValueGroupOperator}], ValueGroupOperatorRest);
     true ->
       [{error, "after calc must be declared the operator", []}]
   end.
@@ -28,12 +33,19 @@ parse_operator_group([Token | Rest]) ->
   {Expr, Value} = Token,
   if
     Expr == integer ->
-      [{Expr, Value}] ++ parse_operator_group(Rest);
-    % Todo: remove breakline from AST
-    Expr == breakline -> 
-      [];
+      [ValueGroupOperator, ValueGroupOperatorRest] = parse_operator_group(Rest, true), 
+      with_rest([{Expr, Value}] ++ ValueGroupOperator, ValueGroupOperatorRest);
     true -> 
-      [{error, "after operator must be declared the value", []}]
+      with_rest([], Rest)
+  end.
+
+parse_operator_group([Token | Rest], _Done) ->
+{Expr, Value} = Token,
+  if
+    Expr == integer -> 
+      with_rest([{Expr, Value}], Rest);
+    true -> 
+      with_rest([], Rest)
   end.
 
   

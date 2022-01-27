@@ -10,5 +10,6 @@ execute() ->
   Source = scan(),
   Tokens = tokenize(Source, 1),
   Parsed = parse(Tokens),
-  io:format("~p ~n", [evaluate(Parsed)]),
+  
+  evaluate(Parsed),
   ok.

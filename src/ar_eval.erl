@@ -1,15 +1,20 @@
 -module(ar_eval).
 -export([evaluate/1]).
 
-evaluate([Token | _Rest]) ->
+evaluate([]) -> ok;
+evaluate([Token | Rest]) ->
   {Expr, _Value, Body} = Token,
   if 
     Expr == calc ->
-      calculate(Body);
+      trace_response(calculate(Body)),
+      evaluate(Rest);
     true ->
       trace_error(Token),
       exit
   end.
+
+trace_response(Response) ->
+  io:format("~p ~n", [Response]).
 
 trace_error(Token) -> 
   {_Expr, Value, _Body} = Token,
