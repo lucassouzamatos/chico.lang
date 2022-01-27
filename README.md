@@ -34,3 +34,18 @@ On the backlog for this interpreter is the enrivonment language, that can store 
 ```bash
 $ ar> var a = 2, var b = 3, calc + a b.
 ```
+
+### Code file
+Should be possible execute all program by source code file, for example:
+
+```bash
+ar math-calc.ar
+```
+Where the math-calc.ar looks like:
+```
+# math-calc.ar
+
+var a = 2,
+var b = 3,
+calc + a b.
+```
