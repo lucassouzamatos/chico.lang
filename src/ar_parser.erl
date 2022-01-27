@@ -11,7 +11,7 @@ parse_group([Token | Rest]) ->
       [ValueGroupCalculate, ValueGroupCalculateRest] =  parse_calculate_group(Rest), 
       [{Expr, Value, ValueGroupCalculate}] ++ parse_group(ValueGroupCalculateRest);
     true ->
-      nil  
+      [{error, "the program must be initialized with calc", []}]  
   end.
 
 with_rest(Value, Rest) ->
@@ -45,7 +45,7 @@ parse_operator_group([Token | Rest], _Done) ->
     Expr == integer -> 
       with_rest([{Expr, Value}], Rest);
     true -> 
-      with_rest([], Rest)
+      [{error, "after operator must be declared the value", []}]
   end.
 
   
