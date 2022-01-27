@@ -8,11 +8,11 @@ parse_group([Token | Rest]) ->
   {Expr, Value} = Token,
   if 
     Expr == calc ->
-      [ValueGroupCalculate, ValueGroupCalculateRest] =  parse_calculate_group(Rest), 
-      [{Expr, Value, ValueGroupCalculate}] ++ parse_group(ValueGroupCalculateRest);
+      [Body, NewRest] =  parse_calculate_group(Rest), 
+      [{Expr, Value, Body}] ++ parse_group(NewRest);
     Expr == variable -> 
-      [VariableDeclaration, VariableDeclarationRest] =  parse_variable_declaration(Rest), 
-      [{Expr, Value, VariableDeclaration}] ++ parse_group(VariableDeclarationRest);
+      [Body, NewRest] =  parse_variable_declaration(Rest), 
+      [{Expr, Value, Body}] ++ parse_group(NewRest);
     true ->
       [{error, "the program must be initialized with calc", []}]  
   end.
@@ -23,8 +23,8 @@ with_rest(Value, Rest) ->
 parse_variable_declaration([Token | Rest]) -> 
   {Expr, Value} = Token,
   if Expr == declaration ->
-    [VariableAssigment, VariableAssigmentRest] = parse_variable_assigment(Rest),
-    with_rest([{Expr, Value, VariableAssigment}], VariableAssigmentRest);
+    [Body, NewRest] = parse_variable_assigment(Rest),
+    with_rest([{Expr, Value, Body}], NewRest);
   true ->
     []
   end.
@@ -32,8 +32,8 @@ parse_variable_declaration([Token | Rest]) ->
 parse_variable_assigment([Token | Rest]) ->
   {Expr, Value} = Token,
   if Expr == assigment ->
-    [VariableNumber, VariableNumberRest] = parse_variable_number(Rest),
-    with_rest([{Expr, Value, VariableNumber}], VariableNumberRest);
+    [Body, NewRest] = parse_variable_number(Rest),
+    with_rest([{Expr, Value, Body}], NewRest);
   true ->
     []
   end.
@@ -50,8 +50,8 @@ parse_calculate_group([Token | Rest]) ->
   {Expr, Value} = Token,
   if 
     Expr == operator ->
-      [ValueGroupOperator, ValueGroupOperatorRest] =  parse_operator_group(Rest),
-      with_rest([{Expr, Value, ValueGroupOperator}], ValueGroupOperatorRest);
+      [Body, NewRest] =  parse_operator_group(Rest),
+      with_rest([{Expr, Value, Body}], NewRest);
     true ->
       [{error, "after calc must be declared the operator", []}]
   end.
@@ -61,8 +61,8 @@ parse_operator_group([Token | Rest]) ->
   {Expr, Value} = Token,
   if
     Expr == integer ->
-      [ValueGroupOperator, ValueGroupOperatorRest] = parse_operator_group(Rest, true), 
-      with_rest([{Expr, Value}] ++ ValueGroupOperator, ValueGroupOperatorRest);
+      [Body, NewRest] = parse_operator_group(Rest, true), 
+      with_rest([{Expr, Value}] ++ Body, NewRest);
     true -> 
       with_rest([], Rest)
   end.
@@ -76,4 +76,3 @@ parse_operator_group([Token | Rest], _Done) ->
       [{error, "after operator must be declared the value", []}]
   end.
 
-  
