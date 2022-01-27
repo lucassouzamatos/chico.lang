@@ -24,8 +24,14 @@ get_token(V) when V == "/" ->
   match_division(V);
 get_token(V) when V == "*" -> 
   match_multiplication(V);
+get_token(V) when V == "var" ->
+  match_variable(V);
+get_token(V) when V == ":=" ->
+  match_assigment(V);
 get_token(V) ->
-  match_unexpected_token(V).
+  match_declaration(V).
+% get_token(V) ->
+  % match_unexpected_token(V).
 
 match_breakline(_V) -> {breakline, none}.
 match_calc(_V) -> {calc, none}.
@@ -39,5 +45,9 @@ match_division(_V) -> {operator, division}.
 % Match type numbers
 match_integer(V) -> {integer, V}.
 
+match_variable(_V) -> {variable, none}.
+match_declaration(V) -> {declaration, V}.
+match_assigment(_V) -> {assigment, none}.
+
 % Match unexpected
-match_unexpected_token(V) -> {error, "the token " ++ V ++ " specified not is ok"}.
+% match_unexpected_token(V) -> {error, "the token " ++ V ++ " specified not is ok"}.

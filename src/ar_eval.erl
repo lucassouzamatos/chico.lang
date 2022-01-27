@@ -1,13 +1,17 @@
 -module(ar_eval).
 -export([evaluate/1]).
+-import(ar_env, [new/0]).
 
 evaluate([]) -> ok;
+% evaluate(Tokens) -> evaluate(Tokens, ar_env:new());
 evaluate([Token | Rest]) ->
   {Expr, _Value, Body} = Token,
   if 
     Expr == calc ->
       trace_response(calculate(Body)),
       evaluate(Rest);
+    % Expr == var ->
+    %   evaluate(Rest, declare_var(Body));
     true ->
       trace_error(Token),
       exit

@@ -10,6 +10,6 @@ execute() ->
   Source = scan(),
   Tokens = tokenize(Source, 1),
   Parsed = parse(Tokens),
-  
-  evaluate(Parsed),
+  erlang:display(Parsed),
+  % evaluate(Parsed),
   ok.
