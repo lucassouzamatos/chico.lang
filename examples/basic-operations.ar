@@ -1,0 +1,27 @@
+calc + 3 5
+calc + 5 9
+calc * 9 0
+calc / 10 2
+
+# functions definition
+fn sum(a b)
+  calc + a b
+
+# variable declaration
+var a := 1
+var b := 2
+
+# if 
+? 1 == 1
+  calc + 2 2
+
+# factorial implementation
+fn factorial(number index)
+  ? number == 0 / number == 1 > 1
+  
+  loop while index >= 1
+    self(
+      calc * number index 
+      calc - i 1
+    )
+  
