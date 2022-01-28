@@ -50,7 +50,7 @@ For future implementations, follows:
 ### Variables
 On the backlog for this interpreter is the enrivonment language, that can store variables and uses on calculation. For example:
 ```bash
-$ ar> var a = 2, var b = 3, calc + a b.
+$ ar> var a = 2 var b = 3 calc + a b
 ```
 
 ### Code file
@@ -63,7 +63,15 @@ Where the math-calc.ar looks like:
 ```
 # math-calc.ar
 
-var a = 2,
-var b = 3,
-calc + a b.
+var a = 2
+var b = 3
+calc + a b
+```
+
+### Functions
+Must be possible define functions:
+
+```
+fn (a b c) 
+  calc + a b
 ```
