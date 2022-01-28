@@ -72,6 +72,12 @@ calc + a b
 Must be possible define functions:
 
 ```
-fn (a b c) 
+fn sum(a b) 
   calc + a b
+```
+
+And should call:
+
+```
+sum a b
 ```
