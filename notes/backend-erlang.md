@@ -11,8 +11,8 @@ calc + 2 2
 This is converted following the example:
 
 ```erlang
-{ ok, FTS, _ } = erl_scan:string("1 + 1.").
+{ ok, FTS, _ } = erl_scan:string("2 + 2.").
 erl_parse:parse_exprs(FTS).
 
-% prints: {ok,[{op,1,'+',{integer,1,1},{integer,1,1}}]}
+% prints: {ok,[{op,1,'+',{integer,1,2},{integer,1,2}}]}
 ```
