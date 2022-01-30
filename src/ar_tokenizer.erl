@@ -34,7 +34,7 @@ get_token(V) ->
   % match_unexpected_token(V).
 
 match_breakline(_V) -> {breakline, none}.
-match_calc(_V) -> {calc, none}.
+match_calc(_V) -> {op, none}.
 
 % Match math operators
 match_plus(_V) -> {operator, plus}.
