@@ -8,7 +8,7 @@ parse_calc([Token | Rest]) ->
   {Expr, _Value} = Token,
   [Op, NewRest] = parse_operator(Rest),
 
-  [{_, OpLine, OpValue, OpBody}] = Op,
+  {_, OpLine, OpValue, OpBody} = Op,
   [Left, Right] = OpBody,
 
   with_rest([{Expr, OpLine, OpValue, Left, Right}], NewRest).
