@@ -14,33 +14,28 @@ parse_calc([Token | Rest]) ->
   with_rest([{Expr, OpLine, OpValue, Left, Right}], NewRest).
 
 parse_operator([]) -> [];
-parse_operator([Token | Rest]) ->
-  {Expr, Value} = Token,
-  if 
-    Expr == operator ->
-      [Body, NewRest] =  parse_left(Rest),
-      with_rest({Expr, 1, Value, Body}, NewRest);
-    true ->
-      [{error, "after calc must be declared the operator", []}]
-  end.
+
+parse_operator([{Expr, Value} | Rest]) when Expr == operator ->
+  [Body, NewRest] =  parse_left(Rest),
+  with_rest({Expr, 1, Value, Body}, NewRest);
+
+parse_operator(_) ->
+  [{error, "after calc must be declared the operator", []}].
+
 
 parse_left([]) -> [];
-parse_left([Token | Rest]) ->
-  {Expr, Value} = Token,
-  if
-    Expr == integer ->
-      [Body, NewRest] = parse_right(Rest), 
-      with_rest([{Expr, 1, Value}] ++ Body, NewRest);
-    true -> 
-      with_rest([], Rest)
-  end.
 
-parse_right([Token | Rest]) ->
-  {Expr, Value} = Token,
-  if
-    Expr == integer -> 
-      with_rest([{Expr, 1, Value}], Rest);
-    true -> 
-      [{error, "after operator must be declared the value", []}]
-  end.
+parse_left([{Expr, Value} | Rest]) when Expr == integer ->
+  [Body, NewRest] = parse_right(Rest),
+  with_rest([{Expr, 1, Value}] ++ Body, NewRest);
+
+parse_left(_) ->
+  [{error, "after operator must be declared the value", []}].
+
+
+parse_right([{Expr, Value} | Rest]) when Expr == integer ->
+  with_rest([{Expr, 1, Value}], Rest);
+
+parse_right(_) ->
+   [{error, "after operator must be declared the value", []}].
 
