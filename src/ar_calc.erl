@@ -4,8 +4,7 @@
 -import(ar_utils, [with_rest/2]).
 
 parse_calc([]) -> [];
-parse_calc([Token | Rest]) ->
-  {Expr, _Value} = Token,
+parse_calc([{Expr, _Value} | Rest]) ->
   [Op, NewRest] = parse_operator(Rest),
 
   {_, OpLine, OpValue, OpBody} = Op,

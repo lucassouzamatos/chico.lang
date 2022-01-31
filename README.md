@@ -7,7 +7,7 @@ This lib is in development status.
 Usage example:
 
 ```bash
-$ ar> calc + 2 2 
+$ ar> apply + 2 2 
 $ 4
 ```
 
@@ -35,7 +35,7 @@ The BNF grammar follows this instructions above:
 ```
 <program> ::= <variable> | <calc>
 
-<calc> ::= "calc " <operator> " " <number> " " <number>
+<calc> ::= "apply " <operator> " " <number> " " <number>
 <operator> ::= "+" | "-" | "*" | "/"
 <number> ::= [0-9]+
 
@@ -50,7 +50,7 @@ For future implementations, follows:
 ### Variables
 On the backlog for this interpreter is the enrivonment language, that can store variables and uses on calculation. For example:
 ```bash
-$ ar> var a = 2 var b = 3 calc + a b
+$ ar> var a = 2 var b = 3 apply + a b
 ```
 
 ### Code file
@@ -65,7 +65,7 @@ Where the math-calc.ar looks like:
 
 var a = 2
 var b = 3
-calc + a b
+apply + a b
 ```
 
 ### Functions
@@ -73,7 +73,7 @@ Must be possible define functions:
 
 ```
 fn sum(a b) 
-  calc + a b
+  apply + a b
 ```
 
 And should call:

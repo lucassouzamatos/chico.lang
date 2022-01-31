@@ -10,7 +10,7 @@ tokenize(Source, Position) ->
   [L | Rest] = Source,
   [get_token(L)] ++ tokenize(Rest, Position + 1).
 
-get_token(V) when V == "calc" ->
+get_token(V) when V == "apply" ->
   match_calc(V);
 get_token(V) when V == "\n" ->
   match_breakline(V);
