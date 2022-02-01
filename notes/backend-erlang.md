@@ -5,7 +5,7 @@ Ar-lang is interpreted and translated to backend erlang. Some examples and notes
 ### Calc operator
 
 ```
-calc + 2 2
+apply + 2 2
 ```
 
 This is converted following the example:
