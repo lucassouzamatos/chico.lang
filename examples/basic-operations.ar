@@ -1,27 +1,22 @@
-calc + 3 5
-calc + 5 9
-calc * 9 0
-calc / 10 2
+apply + 3 5
+apply + 5 9
+apply * 9 0
+apply / 10 2
 
 # functions definition
 fn sum(a b)
-  calc + a b
+  apply + a b
 
 # variable declaration
 var a := 1
 var b := 2
 
-# if 
-? 1 == 1
-  calc + 2 2
-
 # factorial implementation
-fn factorial(number index)
-  ? number == 0 / number == 1 > 1
-  
+fn factorial(number index where number == 0 or number == 1)  
   loop while index >= 1
-    self(
+    recur(
       calc * number index 
       calc - i 1
     )
-  
+
+
