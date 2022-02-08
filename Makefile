@@ -1,6 +1,6 @@
 all: compile
 
-compile: clean
+compile: clean 
 	mkdir ebin 
 	erl -make
 

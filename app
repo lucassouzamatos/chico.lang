@@ -1,6 +1,6 @@
 #!/usr/bin/env escript
 %% -*- erlang -*-
-%%! -pa /usr/arlang/bin -Wall
+%%! -pa ./ebin -Wall
 
 main(_) ->
   ar_main:execute(),
