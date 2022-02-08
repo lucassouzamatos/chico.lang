@@ -12,7 +12,7 @@
 -export([format_error/1]).
 
 %% User code. This is placed here to allow extra attributes.
--file("./ar_tokenizer.xrl", 26).
+-file("./ar_tokenizer.xrl", 27).
 
 -file("/usr/local/lib/erlang/lib/parsetools-2.3.2/include/leexinc.hrl", 14).
 
@@ -316,8 +316,12 @@ yystate(19, Ics, Line, Tlen, _, _) ->
     {1,Tlen,Ics,Line,19};
 yystate(18, [32|Ics], Line, Tlen, _, _) ->
     yystate(18, Ics, Line, Tlen+1, 0, Tlen);
+yystate(18, [13|Ics], Line, Tlen, _, _) ->
+    yystate(18, Ics, Line, Tlen+1, 0, Tlen);
 yystate(18, [9|Ics], Line, Tlen, _, _) ->
     yystate(18, Ics, Line, Tlen+1, 0, Tlen);
+yystate(18, [10|Ics], Line, Tlen, _, _) ->
+    yystate(18, Ics, Line+1, Tlen+1, 0, Tlen);
 yystate(18, Ics, Line, Tlen, _, _) ->
     {0,Tlen,Ics,Line,18};
 yystate(17, [61|Ics], Line, Tlen, Action, Alen) ->
@@ -340,8 +344,12 @@ yystate(16, [42|Ics], Line, Tlen, _, _) ->
     yystate(14, Ics, Line, Tlen+1, 6, Tlen);
 yystate(16, [32|Ics], Line, Tlen, _, _) ->
     yystate(18, Ics, Line, Tlen+1, 6, Tlen);
+yystate(16, [13|Ics], Line, Tlen, _, _) ->
+    yystate(18, Ics, Line, Tlen+1, 6, Tlen);
 yystate(16, [9|Ics], Line, Tlen, _, _) ->
     yystate(18, Ics, Line, Tlen+1, 6, Tlen);
+yystate(16, [10|Ics], Line, Tlen, _, _) ->
+    yystate(18, Ics, Line+1, Tlen+1, 6, Tlen);
 yystate(16, [C|Ics], Line, Tlen, _, _) when C >= 48, C =< 57 ->
     yystate(9, Ics, Line, Tlen+1, 6, Tlen);
 yystate(16, [C|Ics], Line, Tlen, _, _) when C >= 65, C =< 90 ->
@@ -485,57 +493,57 @@ yyaction(10, TokenLen, YYtcs, TokenLine) ->
 yyaction(_, _, _, _) -> error.
 
 -compile({inline,yyaction_0/0}).
--file("./ar_tokenizer.xrl", 9).
+-file("./ar_tokenizer.xrl", 10).
 yyaction_0() ->
      skip_token .
 
 -compile({inline,yyaction_1/1}).
--file("./ar_tokenizer.xrl", 11).
+-file("./ar_tokenizer.xrl", 12).
 yyaction_1(TokenLine) ->
-     { token, { op, TokenLine, apply } } .
+     { token, { apply, TokenLine, apply } } .
 
 -compile({inline,yyaction_2/1}).
--file("./ar_tokenizer.xrl", 12).
+-file("./ar_tokenizer.xrl", 13).
 yyaction_2(TokenLine) ->
      { token, { operator, TokenLine, '+' } } .
 
 -compile({inline,yyaction_3/1}).
--file("./ar_tokenizer.xrl", 13).
+-file("./ar_tokenizer.xrl", 14).
 yyaction_3(TokenLine) ->
      { token, { operator, TokenLine, '-' } } .
 
 -compile({inline,yyaction_4/1}).
--file("./ar_tokenizer.xrl", 14).
+-file("./ar_tokenizer.xrl", 15).
 yyaction_4(TokenLine) ->
      { token, { operator, TokenLine, '/' } } .
 
 -compile({inline,yyaction_5/1}).
--file("./ar_tokenizer.xrl", 15).
+-file("./ar_tokenizer.xrl", 16).
 yyaction_5(TokenLine) ->
      { token, { operator, TokenLine, '*' } } .
 
 -compile({inline,yyaction_6/2}).
--file("./ar_tokenizer.xrl", 17).
+-file("./ar_tokenizer.xrl", 18).
 yyaction_6(TokenChars, TokenLine) ->
      { token, { number, TokenLine, list_to_integer (TokenChars) } } .
 
 -compile({inline,yyaction_7/2}).
--file("./ar_tokenizer.xrl", 18).
+-file("./ar_tokenizer.xrl", 19).
 yyaction_7(TokenChars, TokenLine) ->
      { token, { number, TokenLine, list_to_float (TokenChars) } } .
 
 -compile({inline,yyaction_8/1}).
--file("./ar_tokenizer.xrl", 20).
+-file("./ar_tokenizer.xrl", 21).
 yyaction_8(TokenLine) ->
      { token, { variable, TokenLine, none } } .
 
 -compile({inline,yyaction_9/1}).
--file("./ar_tokenizer.xrl", 21).
+-file("./ar_tokenizer.xrl", 22).
 yyaction_9(TokenLine) ->
      { token, { assigment, TokenLine, none } } .
 
 -compile({inline,yyaction_10/2}).
--file("./ar_tokenizer.xrl", 22).
+-file("./ar_tokenizer.xrl", 23).
 yyaction_10(TokenChars, TokenLine) ->
      { token, { declaration, TokenLine, TokenChars } } .
 

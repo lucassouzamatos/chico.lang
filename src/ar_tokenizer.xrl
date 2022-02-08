@@ -6,11 +6,12 @@ L	= [a-z]
 A	= ({U}|{L})
 F = (\+|-)?[0-9]+\.[0-9]+
 I = (\+|-)?[0-9]*
+W = [\s\t\n\r] 
 
 Rules.
-[\s\t]+ : skip_token.
+{W}+ : skip_token.
 
-apply  : {token, {op, TokenLine, apply}}.
+apply  : {token, {apply, TokenLine, apply}}.
 \+     : {token, {operator, TokenLine, '+'}}.
 \-     : {token, {operator, TokenLine, '-'}}.
 \/     : {token, {operator, TokenLine, '/'}}.
