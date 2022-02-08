@@ -10,7 +10,7 @@ tokenize(Source, Position) ->
   [L | Rest] = Source,
   [get_token(L)] ++ tokenize(Rest, Position + 1).
 
-get_token(V) when V == "calc" ->
+get_token(V) when V == "apply" ->
   match_calc(V);
 get_token(V) when V == "\n" ->
   match_breakline(V);
@@ -34,13 +34,13 @@ get_token(V) ->
   % match_unexpected_token(V).
 
 match_breakline(_V) -> {breakline, none}.
-match_calc(_V) -> {calc, none}.
+match_calc(_V) -> {op, none}.
 
 % Match math operators
-match_plus(_V) -> {operator, plus}.
-match_minus(_V) -> {operator, minus}.
-match_multiplication(_V) -> {operator, multiplication}.
-match_division(_V) -> {operator, division}.
+match_plus(_V) -> {operator, '+'}.
+match_minus(_V) -> {operator, '-'}.
+match_multiplication(_V) -> {operator, '*'}.
+match_division(_V) -> {operator, '/'}.
 
 % Match type numbers
 match_integer(V) -> {integer, V}.

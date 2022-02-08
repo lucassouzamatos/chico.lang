@@ -1,38 +1,38 @@
-name: Makefile CI
+# name: Makefile CI
 
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+# on:
+#   push:
+#     branches: [ main ]
+#   pull_request:
+#     branches: [ main ]
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
 
-    steps:
-    - uses: actions/checkout@v2
+#     steps:
+#     - uses: actions/checkout@v2
       
-    - name: Install dependencies
-      run: make
+#     - name: Install dependencies
+#       run: make
       
-    - name: release
-      uses: actions/create-release@v1
-      id: create_release
-      with:
-        draft: false
-        prerelease: false
-        release_name: ${{ steps.version.outputs.version }}
-        tag_name: ${{ github.ref }}
-      env:
-        GITHUB_TOKEN: ${{ github.token }}
+#     - name: release
+#       uses: actions/create-release@v1
+#       id: create_release
+#       with:
+#         draft: false
+#         prerelease: false
+#         release_name: ${{ steps.version.outputs.version }}
+#         tag_name: ${{ github.ref }}
+#       env:
+#         GITHUB_TOKEN: ${{ github.token }}
   
-    - name: upload linux artifact
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ github.token }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./ebin
-        asset_name: ebin
-        asset_content_type: application/gzip
+#     - name: upload linux artifact
+#       uses: actions/upload-release-asset@v1
+#       env:
+#         GITHUB_TOKEN: ${{ github.token }}
+#       with:
+#         upload_url: ${{ steps.create_release.outputs.upload_url }}
+#         asset_path: ./ebin
+#         asset_name: ebin
+#         asset_content_type: application/gzip
