@@ -4,19 +4,22 @@ apply * 9 0
 apply / 10 2
 
 # functions definition
-fn sum(a b)
-  apply + a b
+var sum := (a b) -> apply + a b
+var result := apply sum 1 2
 
 # variable declaration
 var a := 1
 var b := 2
 
 # factorial implementation
-fn factorial(number index where number == 0 or number == 1)  
-  loop while index >= 1
-    recur(
-      calc * number index 
-      calc - i 1
-    )
+var factorial := 
+  (number index) where number == 0 ->
+    1
+  (number index) where number < 0 -> 
+    .
+  (number index)
+    var x := apply - number 1
+    var y := apply factorial x
 
+    apply * number y
 
