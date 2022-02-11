@@ -7,7 +7,8 @@ Nonterminals
 Terminals
   apply
   operator
-  number
+  float
+  integer
   variable
   assigment
   declaration
@@ -21,7 +22,10 @@ program -> application : '$1'.
 
 application -> apply operation : [{apply, '$2'}].
 
-operation -> operator number number : {'$1', '$2', '$3'}.
+operation -> operator float float : {'$1', '$2', '$3'}.
+operation -> operator integer integer : {'$1', '$2', '$3'}.
+operation -> operator integer float : {'$1', '$2', '$3'}.
+operation -> operator float integer : {'$1', '$2', '$3'}.
 
 Erlang code.
 

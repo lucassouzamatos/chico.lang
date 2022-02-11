@@ -17,8 +17,8 @@ apply  : {token, {apply, TokenLine, apply}}.
 \/     : {token, {operator, TokenLine, '/'}}.
 \*     : {token, {operator, TokenLine, '*'}}.
 
-{I}    : {token, {number, TokenLine, list_to_integer(TokenChars)}}.
-{F}    : {token, {number, TokenLine, list_to_float(TokenChars)}}.
+{I}    : {token, {integer, TokenLine, list_to_integer(TokenChars)}}.
+{F}    : {token, {float, TokenLine, list_to_float(TokenChars)}}.
 
 var    : {token, {variable, TokenLine, none}}.
 :=     : {token, {assigment, TokenLine, none}}.

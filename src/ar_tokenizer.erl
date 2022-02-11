@@ -525,12 +525,12 @@ yyaction_5(TokenLine) ->
 -compile({inline,yyaction_6/2}).
 -file("./ar_tokenizer.xrl", 18).
 yyaction_6(TokenChars, TokenLine) ->
-     { token, { number, TokenLine, list_to_integer (TokenChars) } } .
+     { token, { integer, TokenLine, list_to_integer (TokenChars) } } .
 
 -compile({inline,yyaction_7/2}).
 -file("./ar_tokenizer.xrl", 19).
 yyaction_7(TokenChars, TokenLine) ->
-     { token, { number, TokenLine, list_to_float (TokenChars) } } .
+     { token, { float, TokenLine, list_to_float (TokenChars) } } .
 
 -compile({inline,yyaction_8/1}).
 -file("./ar_tokenizer.xrl", 21).
