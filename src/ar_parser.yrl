@@ -2,6 +2,9 @@ Nonterminals
   program
   application
   operation
+  variable_declaration
+  operation_value
+  value
 .
 
 Terminals
@@ -21,11 +24,17 @@ Rootsymbol
 program -> application : '$1'.
 
 application -> apply operation : [{apply, '$2'}].
+application -> variable_declaration : ['$1'].
 
-operation -> operator float float : {'$1', '$2', '$3'}.
-operation -> operator integer integer : {'$1', '$2', '$3'}.
-operation -> operator integer float : {'$1', '$2', '$3'}.
-operation -> operator float integer : {'$1', '$2', '$3'}.
+value -> float : '$1'.
+value -> integer : '$1'.
+
+operation_value -> declaration : '$1'.
+operation_value -> value : '$1'.
+
+operation -> operator operation_value operation_value : {'$1', '$2', '$3'}.
+
+variable_declaration -> variable declaration assigment value : {'$1', '$2', '$4'}.
 
 Erlang code.
 
