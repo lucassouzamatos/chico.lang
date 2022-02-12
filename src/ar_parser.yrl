@@ -1,6 +1,7 @@
 Nonterminals
   program
   application
+  applications
   operation
   variable_declaration
   operation_value
@@ -21,10 +22,13 @@ Rootsymbol
   program
 .
 
-program -> application : '$1'.
+program -> applications : '$1'.
 
-application -> apply operation : [{apply, '$2'}].
-application -> variable_declaration : ['$1'].
+applications -> application : ['$1'].
+applications -> application applications : ['$1' | '$2'].
+
+application -> apply operation : {apply, '$2'}.
+application -> variable_declaration : '$1'.
 
 value -> float : '$1'.
 value -> integer : '$1'.
