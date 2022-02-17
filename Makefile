@@ -1,13 +1,8 @@
 all: compile
 
-compile: clean 
-	mkdir ebin 
+compile: clean
+	mkdir ebin
 	erl -make
-
-install: compile
-	sudo mkdir -p /usr/arlang
-	sudo cp -r ebin /usr/arlang/bin
-	sudo cp app /usr/bin/ar
 
 uninstall: 
 	sudo rm -rf /usr/arlang
@@ -19,4 +14,3 @@ clean:
 
 run:
 	./app
-
