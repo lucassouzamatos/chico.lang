@@ -1,10 +1,7 @@
 -module(ar_compiler).
--export([eval/2]).
+-export([read_file/1]).
 
-trace(V) -> erlang:display(V).
-
-eval(Exprs, Binding) -> 
-  {value, Value, NewBinding} = erl_eval:exprs(Exprs, Binding),
-  trace(Value),
-  NewBinding.
-
+read_file(F) -> 
+  {ok, File} = file:read_file(F),
+  Content = unicode:characters_to_list(File),
+  erlang:display(Content).

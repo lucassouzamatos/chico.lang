@@ -1,9 +1,9 @@
 %% leex file structure
  
 Definitions.
-U	= [A-Z]
-L	= [a-z]
-A	= ({U}|{L})
+U = [A-Z]
+L = [a-z]
+A = ({U}|{L})
 F = (\+|-)?[0-9]+\.[0-9]+
 I = (\+|-)?[0-9]*
 W = [\s\t\n\r] 
