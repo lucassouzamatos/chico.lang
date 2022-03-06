@@ -7,6 +7,8 @@ translate([]) -> [];
 translate([{apply, {{operator, Line, Operation}, L, R}} | Rest]) ->
   [{op, Line, Operation, unwrap_hand_side(L), unwrap_hand_side(R)}] ++ translate(Rest);
 
+translate([{apply, {declaration, Line, Declaration}, []} | Rest]) ->
+  [{call, Line, {var, Line, Declaration}, []}] ++ translate(Rest);
 translate([{apply, {declaration, Line, Declaration}, Arguments} | Rest]) ->
   [{call, Line, {var, Line, Declaration}, translate(Arguments)}] ++ translate(Rest);
 

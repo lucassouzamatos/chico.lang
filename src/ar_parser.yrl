@@ -36,8 +36,9 @@ applications -> application : ['$1'].
 applications -> application applications : ['$1' | '$2'].
 
 application -> function_declaration : '$1'.
-application -> apply operation : {apply, '$2'}.
-application -> apply declaration operation_values : {apply, '$2', '$3'}.
+application -> apply operation done : {apply, '$2'}.
+application -> apply declaration operation_values done : {apply, '$2', '$3'}.
+application -> apply declaration done : {apply, '$2', []}.
 application -> variable_declaration : '$1'.
 
 value -> float : '$1'.
@@ -66,5 +67,14 @@ function_declaration ->
   applications
   done : {'$1', '$2', '$4', '$7'}.
 
+  function_declaration -> 
+    function 
+    declaration 
+    left_parenthesis 
+    right_parenthesis 
+    open_function
+    applications
+    done : {'$1', '$2', [], '$6'}.
+  
 Erlang code.
 

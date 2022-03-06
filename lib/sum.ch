@@ -1,0 +1,1 @@
+fun sum(A B) -> apply + A B done
