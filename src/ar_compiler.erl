@@ -42,7 +42,7 @@ compile_file(Source, Filename) ->
   Translated = ar_translate:translate(Parsed),
   %% .
 
-  Forms = construct_form(Module, Content),
+  Forms = construct_form(Module, Translated),
 
   { ok, Generated, Bin } = compile:forms(Forms),
 
