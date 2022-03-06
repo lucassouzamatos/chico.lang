@@ -1,14 +1,17 @@
 #!/usr/bin/env escript
 %% -*- erlang -*-
-%%! -pa /usr/chicolang/bin -Wall
+%%! -pa ./ebin -Wall
 
-main([]) ->
+% If not is passed as parameter, the REPL is started
+main([]) -> 
   ar_repl:execute(),
   io:format("(\\\/)~n");
 
-% @in progress
+%% If --compile option is passed, the file specified is computed
+%% Example:
+%%   $ chico --compile test.ch
+%%   $ [success]: "file compiled successfully"
 main([Option, Value]) when Option == "--compile" ->
-  io:format("Start compilation...~p~n", [Value]),
   ar_compiler:read_file(Value);
 
 main([Option]) when Option == "--compile" ->
