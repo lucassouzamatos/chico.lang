@@ -8,8 +8,14 @@ translate([{apply, {{operator, Line, Operation}, L, R}} | Rest]) ->
   [{op, Line, Operation, unwrap_hand_side(L), unwrap_hand_side(R)}] ++ translate(Rest);
 
 translate([{apply, {declaration, Line, Declaration}, Arguments} | Rest]) ->
-  [{call, Line, {var, Line, Declaration}, Arguments}] ++ translate(Rest);
-  
+  [{call, Line, {var, Line, Declaration}, translate(Arguments)}] ++ translate(Rest);
+
+translate([{integer, Line, Value} | Rest]) ->
+  [{integer, Line, Value}] ++ translate(Rest);
+
+translate([{float, Line, Value} | Rest]) ->
+  [{float, Line, Value}] ++ translate(Rest);
+
 translate([{{variable, Line, _}, {_, _, Name}, R} | Rest]) ->
   [{match, Line, {var, Line, Name}, R}] ++ translate(Rest);
 
