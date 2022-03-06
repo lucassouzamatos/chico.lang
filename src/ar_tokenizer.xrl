@@ -11,6 +11,11 @@ W = [\s\t\n\r]
 Rules.
 {W}+ : skip_token.
 
+fun    : {token, {function, TokenLine, none}}.
+\(     : {token, {left_parenthesis, TokenLine, none}}.
+\)     : {token, {right_parenthesis, TokenLine, none}}.
+\->    : {token, {open_function, TokenLine, none}}.
+
 apply  : {token, {apply, TokenLine, apply}}.
 \+     : {token, {operator, TokenLine, '+'}}.
 \-     : {token, {operator, TokenLine, '-'}}.
