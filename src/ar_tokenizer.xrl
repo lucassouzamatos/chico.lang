@@ -22,6 +22,6 @@ apply  : {token, {apply, TokenLine, apply}}.
 
 var    : {token, {variable, TokenLine, none}}.
 :=     : {token, {assigment, TokenLine, none}}.
-{A}+   : {token, {declaration, TokenLine, TokenChars}}.
+{A}+   : {token, {declaration, TokenLine, list_to_atom(TokenChars)}}.
 
 Erlang code.

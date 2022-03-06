@@ -545,6 +545,6 @@ yyaction_9(TokenLine) ->
 -compile({inline,yyaction_10/2}).
 -file("./ar_tokenizer.xrl", 23).
 yyaction_10(TokenChars, TokenLine) ->
-     { token, { declaration, TokenLine, TokenChars } } .
+     { token, { declaration, TokenLine, list_to_atom (TokenChars) } } .
 
 -file("/usr/local/lib/erlang/lib/parsetools-2.3.2/include/leexinc.hrl", 313).

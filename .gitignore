@@ -17,3 +17,5 @@ _build/
 _checkouts/
 
 ebin
+
+test_file_compilation.ch

@@ -11,21 +11,6 @@ var result := apply sum 1 2
 var a := 1
 var b := 2
 
-fun factorial (number index) ->
-  apply + 1 2
-
-# factorial implementation
-fun factorial 
-  (number index) where number == 0 ->
-    1
-  (number index) where number < 0 -> 
-    void
-  (number index)
-    var x := apply - number 1
-    var y := apply factorial x
-
-    apply * number y
-
 # type annotations
 factorial :: (int int) -> int
              (int int) -> void
