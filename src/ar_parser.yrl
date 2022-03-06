@@ -6,8 +6,8 @@ Nonterminals
   variable_declaration
   operation_value
   value
+  values
   function_declaration
-  functions
   declarations
 .
 
@@ -23,6 +23,7 @@ Terminals
   left_parenthesis
   right_parenthesis
   open_function
+  done
 .
 
 Rootsymbol
@@ -30,19 +31,20 @@ Rootsymbol
 .
 
 program -> applications : '$1'.
-program -> functions : '$1'.
-
-functions -> function_declaration : ['$1'].
-functions -> function_declaration functions : ['$1' | '$2'].
 
 applications -> application : ['$1'].
 applications -> application applications : ['$1' | '$2'].
 
+application -> function_declaration : '$1'.
 application -> apply operation : {apply, '$2'}.
+application -> apply declaration values : {apply, '$2', '$3'}.
 application -> variable_declaration : '$1'.
 
 value -> float : '$1'.
 value -> integer : '$1'.
+
+values -> value : ['$1'].
+values -> value values : ['$1' | '$2'].
 
 operation_value -> declaration : '$1'.
 operation_value -> value : '$1'.
@@ -61,7 +63,8 @@ function_declaration ->
   declarations 
   right_parenthesis 
   open_function
-  applications : {'$1', '$2', '$4', '$7'}.
+  applications
+  done : {'$1', '$2', '$4', '$7'}.
 
 Erlang code.
 
