@@ -1,10 +1,9 @@
 ## Chico.lang
 
-Interpret basic arithmetic operations.
+This language is an experimental library and is in development. You can't use in production.
 
-This lib is in development status.
-
-Usage example:
+## Overview
+Using the shell, you can do basic operations, like this:
 
 ```bash
 $ chico> var a := 12
@@ -13,6 +12,13 @@ $ chico> apply + a 1 done
 $ 13
 
 ```
+## Sections
+- [Getting started](#getting-started)
+- [Documentation](#documentation)
+  - [Comments](#comments)
+  - [Variable declarations](#variable-declarations)
+  - [Applications](#applications)
+  - [Function declarations](#function-declarations)
 
 ## Getting started
 
