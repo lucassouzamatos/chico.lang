@@ -11,7 +11,7 @@
 #
 #   apply 
 #     > math:sum A B
-#   #|> pipeline operator receive the last result expression
+#    |> pipeline operator receive the last result expression
 #   done
 #
 fun sum(A B) -> apply + A B done
