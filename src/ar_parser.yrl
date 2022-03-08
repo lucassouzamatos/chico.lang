@@ -9,6 +9,7 @@ Nonterminals
   value
   function_declaration
   declarations
+  call
 .
 
 Terminals
@@ -36,10 +37,12 @@ applications -> application : ['$1'].
 applications -> application applications : ['$1' | '$2'].
 
 application -> function_declaration : '$1'.
-application -> apply operation done : {apply, '$2'}.
-application -> apply declaration operation_values done : {apply, '$2', '$3'}.
-application -> apply declaration done : {apply, '$2', []}.
 application -> variable_declaration : '$1'.
+application -> call : '$1'.
+
+call -> apply operation done : {apply, '$2'}.
+call -> apply declaration operation_values done : {apply, '$2', '$3'}.
+call -> apply declaration done : {apply, '$2', []}.
 
 value -> float : '$1'.
 value -> integer : '$1'.
@@ -53,6 +56,7 @@ operation_values -> operation_value operation_values : ['$1' | '$2'].
 operation -> operator operation_value operation_value : {'$1', '$2', '$3'}.
 
 variable_declaration -> variable declaration assigment value : {'$1', '$2', '$4'}.
+variable_declaration -> variable declaration assigment call : {'$1', '$2', '$4'}.
 
 declarations -> declaration : ['$1'].
 declarations -> declaration declarations : ['$1' | '$2'].
