@@ -71,14 +71,14 @@ function_declaration ->
   applications
   done : {'$1', '$2', '$4', '$7'}.
 
-  function_declaration -> 
-    function 
-    declaration 
-    left_parenthesis 
-    right_parenthesis 
-    open_function
-    applications
-    done : {'$1', '$2', [], '$6'}.
+function_declaration -> 
+  function 
+  declaration 
+  left_parenthesis 
+  right_parenthesis 
+  open_function
+  applications
+  done : {'$1', '$2', [], '$6'}.
   
 Erlang code.
 
