@@ -789,7 +789,7 @@ yeccpars2_19_(__Stack0) ->
 yeccpars2_23_(__Stack0) ->
  [___7,___6,___5,___4,___3,___2,___1 | __Stack] = __Stack0,
  [begin
-           {___1, ___2, [], ___6}
+         {___1, ___2, [], ___6}
   end | __Stack].
 
 -compile({inline,yeccpars2_24_/1}).

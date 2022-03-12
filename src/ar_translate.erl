@@ -20,6 +20,9 @@ translate([{float, Line, Value} | Rest]) ->
 translate([{{variable, Line, _}, {_, _, Name}, {apply, ApplyArgs}} | Rest]) ->
   [Arguments] = translate([{apply, ApplyArgs}]),
   [{match, Line, {var, Line, Name}, Arguments}] ++ translate(Rest);
+translate([{{variable, Line, _}, {_, _, Name}, {apply, ApplyArgs, ApplyArgs1}} | Rest]) ->
+  [Arguments] = translate([{apply, ApplyArgs, ApplyArgs1}]),
+  [{match, Line, {var, Line, Name}, Arguments}] ++ translate(Rest);
 translate([{{variable, Line, _}, {_, _, Name}, R} | Rest]) ->
   [{match, Line, {var, Line, Name}, R}] ++ translate(Rest);
 

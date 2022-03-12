@@ -40,9 +40,9 @@ application -> function_declaration : '$1'.
 application -> variable_declaration : '$1'.
 application -> call : '$1'.
 
-call -> apply operation done : {apply, '$2'}.
-call -> apply declaration operation_values done : {apply, '$2', '$3'}.
-call -> apply declaration done : {apply, '$2', []}.
+call -> apply operation done : {apply, '$2'}. %% apply + 2 2 done
+call -> apply declaration operation_values done : {apply, '$2', '$3'}. %% apply sum 2 2 done
+call -> apply declaration done : {apply, '$2', []}. %% apply sum done
 
 value -> float : '$1'.
 value -> integer : '$1'.
