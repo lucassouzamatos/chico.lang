@@ -17,6 +17,10 @@ fun    : {token, {function, TokenLine, none}}.
 \->    : {token, {open_function, TokenLine, none}}.
 done   : {token, {done, TokenLine, none}}.
 
+"(\\\^.|\\.|[^"])*" : 
+    S = lists:sublist(TokenChars, 2, TokenLen - 2), 
+    {token,{string, TokenLine, list_to_atom(S)}}.
+
 apply  : {token, {apply, TokenLine, apply}}.
 \+     : {token, {operator, TokenLine, '+'}}.
 \-     : {token, {operator, TokenLine, '-'}}.

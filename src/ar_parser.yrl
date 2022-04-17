@@ -24,6 +24,7 @@ Terminals
   left_parenthesis
   right_parenthesis
   open_function
+  string
   done
 .
 
@@ -46,6 +47,7 @@ call -> apply declaration done : {apply, '$2', []}. %% apply sum done
 
 value -> float : '$1'.
 value -> integer : '$1'.
+value -> string : '$1'.
 
 operation_value -> declaration : '$1'.
 operation_value -> value : '$1'.
