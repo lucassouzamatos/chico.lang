@@ -37,9 +37,12 @@ compile_file(Source, Filename) ->
 
   %% Set this code to another file
   {ok, Tokens, _} = ar_tokenizer:string(Content),
+  erlang:display(Tokens),
   {ok, Parsed } = ar_parser:parse(Tokens),
-
+  erlang:display(Parsed),
   Translated = ar_translate:translate(Parsed),
+  erlang:display(Translated),
+
   %% .
 
   Forms = construct_form(Module, Translated),

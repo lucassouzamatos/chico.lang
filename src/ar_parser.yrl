@@ -39,6 +39,8 @@ applications -> application applications : ['$1' | '$2'].
 
 application -> function_declaration : '$1'.
 application -> variable_declaration : '$1'.
+application -> declaration done : '$1'.
+application -> value done : '$1'.
 application -> call : '$1'.
 
 call -> apply operation done : {apply, '$2'}. %% apply + 2 2 done
