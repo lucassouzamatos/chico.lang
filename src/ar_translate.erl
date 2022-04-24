@@ -30,9 +30,25 @@ apply(Body, Args) ->
     _ -> error
   end.
 
+guard(Pattern, Body) -> 
+  {rewrite(Pattern), [], translate(Body)}.
+
+clause({GuardPattern, GuardBody}) ->
+  spread({clause, 1}, guard(GuardPattern, GuardBody)).
+
+match(Body) -> 
+  case Body of
+    [{{guard, GuardPattern}, GuardBody} | Rest] -> [clause({GuardPattern, GuardBody})] ++ match(Rest);
+    _ -> []
+  end.
+
 translate([]) -> [];
 translate([C]) -> rewrite(C);
 translate([C|Rest]) -> rewrite(C) ++ translate(Rest).
+
+rewrite({{match, _, _}, Expr, Body}) -> 
+  [A] = rewrite(Expr),
+  [{'case', 1, A, match(Body)}];
 
 rewrite({apply, Body, Args}) -> [apply(Body, Args)];
 rewrite({apply, Body}) -> [apply(Body)];

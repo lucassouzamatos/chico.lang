@@ -10,6 +10,10 @@ Nonterminals
   function_declaration
   declarations
   call
+  match_declaration
+  clause_declaration
+  clause_declarations
+  guard
 .
 
 Terminals
@@ -25,6 +29,8 @@ Terminals
   right_parenthesis
   open_function
   string
+  match
+  with
   done
 .
 
@@ -42,10 +48,21 @@ application -> variable_declaration : '$1'.
 application -> declaration done : '$1'.
 application -> value done : '$1'.
 application -> call : '$1'.
+application -> match_declaration : '$1'.
 
-call -> apply operation done : {apply, '$2'}. %% apply + 2 2 done
-call -> apply declaration operation_values done : {apply, '$2', '$3'}. %% apply sum 2 2 done
-call -> apply declaration done : {apply, '$2', []}. %% apply sum done
+call -> apply operation done : {apply, '$2'}.
+call -> apply declaration operation_values done : {apply, '$2', '$3'}.
+call -> apply declaration done : {apply, '$2', []}.
+
+match_declaration -> match declaration with clause_declarations done : {'$1', '$2', '$4'}.
+
+clause_declaration -> guard open_function applications : {'$1', '$3'}.
+
+clause_declarations -> clause_declaration : ['$1'].
+clause_declarations -> clause_declaration clause_declarations : ['$1' | '$2'].
+
+guard -> left_parenthesis value right_parenthesis : {guard, '$2'}.
+guard -> left_parenthesis declaration right_parenthesis : {guard, '$2'}.
 
 value -> float : '$1'.
 value -> integer : '$1'.
@@ -86,3 +103,5 @@ function_declaration ->
   
 Erlang code.
 
+spread(A, B) -> 
+  list_to_tuple(tuple_to_list(A) ++ tuple_to_list(B)).

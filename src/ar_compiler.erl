@@ -35,12 +35,9 @@ compile_file(Source, Filename) ->
   Module = hydrate_module_name(Filename),
   Content = unicode:characters_to_list(Source),
 
-  %% Set this code to another file
   {ok, Tokens, _} = ar_tokenizer:string(Content),
   {ok, Parsed } = ar_parser:parse(Tokens),
   Translated = ar_translate:translate(Parsed),
-
-  %% .
 
   Forms = construct_form(Module, Translated),
 
