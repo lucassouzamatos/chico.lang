@@ -30,8 +30,8 @@ apply  : {token, {apply, TokenLine, apply}}.
 {I}    : {token, {integer, TokenLine, list_to_integer(TokenChars)}}.
 {F}    : {token, {float, TokenLine, list_to_float(TokenChars)}}.
 
-var    : {token, {variable, TokenLine, none}}.
-:=     : {token, {assigment, TokenLine, none}}.
+let    : {token, {variable, TokenLine, none}}.
+=      : {token, {assigment, TokenLine, none}}.
 {A}+   : {token, {declaration, TokenLine, list_to_atom(TokenChars)}}.
 _      : {token, {declaration, TokenLine, '_'}}.
 
