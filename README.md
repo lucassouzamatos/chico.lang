@@ -1,17 +1,17 @@
 ## Chico.lang
 
-This language is an experimental library and is in development. You can't use in production.
+This is a _toy_ functional language. You can't use in production _yet_.
 
 ## Overview
 Using the shell, you can do basic operations, like this:
 
-```bash
-$ chico> var a := 12
+```
+$ chico> let a = 12
 $ 12
 $ chico> apply + a 1 done
 $ 13
-
 ```
+
 ## Sections
 - [Getting started](#getting-started)
 - [Documentation](#documentation)
@@ -49,8 +49,8 @@ Below it's possible see some examples about features enabled in the lang.
 All lines with `#` in the start are considered a comment.
 
 ```
-# The var specified is for a test
-var T := 1
+# The let specified is for a test
+let T = 1
 ```
 
 ### Variable declarations
@@ -58,8 +58,8 @@ var T := 1
 The variables are declared as described in the example, and allow only integers and floats:
 
 ```
-var A := 1
-var B := 1.425
+let A = 1
+let B = 1.425
 ```
 
 ### Applications
@@ -67,7 +67,7 @@ var B := 1.425
 The `apply` term is used for call any function or operator:
 
 ```
-var A := 12
+let A = 12
 
 apply + 1 A done
 ```
@@ -79,5 +79,22 @@ The functions not has return expression declared, then the last expression is th
 ```
 fun sum(A B) ->
   apply + A B done
+done
+```
+
+If you wanna return a closure function, you can return an another function directly:
+
+```
+fun builder(Self) ->
+  fun Apply (N) ->
+    match N with
+      (1) -> 1 done
+      (_) -> 
+        let X = apply - N 1 done
+        let Y = apply Self X done
+
+        apply * N Y done
+    done
+  done
 done
 ```
