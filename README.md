@@ -12,6 +12,15 @@ $ chico> apply + a 1 done
 $ 13
 ```
 
+Or create and use functions:
+
+```
+$ chico>fun T () -> 1 done done
+$ #Fun<erl_eval.45.65746770>
+$ chico>apply T done
+$ 1
+```
+
 ## Sections
 - [Getting started](#getting-started)
 - [Documentation](#documentation)
