@@ -1,19 +1,20 @@
-# Apply lambda recursion in any function #
-#                                        #
-# Example of usage:                      #
-#                                        #
-# fun builder(Self) ->                   #
-#   fun Apply (N) ->                     #
-#     match N with                       #
-#       (1) -> 1 done                    #
-#       (_) ->                           #
-#         let X = apply - N 1 done       #
-#         let Y = apply Self X done      #
-#                                        #
-#         apply * N Y done               #
-#     done                               #
-#   done                                 #
-# done                                   #
+#
+# Apply lambda recursion in any function                
+# Example of usage:                                     
+#                                                       
+# fun builder(Self) ->                                  
+#   fun Apply (N) ->                                    
+#     match N with                                      
+#       (1) -> 1 done                                   
+#       (_) ->                                          
+#         let X = apply - N 1 done                      
+#         let Y = apply Self X done                     
+#                                                       
+#         apply * N Y done                              
+#     done                                              
+#   done                                                
+# done                                                 
+# 
 
 fun recur (F) -> 
   fun Recursion (X) ->
