@@ -29,7 +29,7 @@ construct_form(M, C) ->
                      C}]}].
 
 hydrate_module_name(N) ->
-  string:lowercase(string:replace(N, ".ch", "")).
+  string:lowercase(string:replace(N, ".chico", "")).
 
 compile_file(Source, Filename) -> 
   Module = hydrate_module_name(Filename),
