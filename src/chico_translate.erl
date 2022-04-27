@@ -1,4 +1,4 @@
--module(ar_translate).
+-module(chico_translate).
 -export([translate/2]).
 
 -compile({no_auto_import,[apply/2]}).
@@ -43,8 +43,8 @@ anon_function(Line, Arguments, Body, E) ->
   {clauses, [{clause, Line, translate(Arguments, E), [], translate(Body, E)}]}.
 
 translate([], _) -> [];
-translate([C], #ar_parser_env{} = E) -> rewrite(C, E);
-translate([C|Rest], #ar_parser_env{} = Env) -> rewrite(C, Env) ++ translate(Rest, Env).
+translate([C], #chico_parser_env{} = E) -> rewrite(C, E);
+translate([C|Rest], #chico_parser_env{} = Env) -> rewrite(C, Env) ++ translate(Rest, Env).
 
 rewrite({{match, _, _}, Expr, Body}, E) -> 
   [A] = rewrite(Expr, E),
@@ -77,7 +77,7 @@ rewrite({{variable, Line, _}, {_, _, Name}, R}, _) ->
 rewrite({declaration, Line, Name}, Env) -> 
   IsFun = lists:search(
     fun ({N, _}) -> N == Name end, 
-    Env#ar_parser_env.functions
+    Env#chico_parser_env.functions
   ),
   
   case IsFun of

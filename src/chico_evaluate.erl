@@ -1,4 +1,4 @@
--module(ar_evaluate).
+-module(chico_evaluate).
 -export([eval/2]).
 
 trace(V) -> erlang:display(V).

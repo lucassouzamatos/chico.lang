@@ -1,6 +1,6 @@
--module(ar_parser).
+-module(chico_parser).
 -export([parse/1, parse_and_scan/1, format_error/1]).
--file("ar_parser.yrl", 119).
+-file("chico_parser.yrl", 119).
 
 -file("/usr/lib/erlang/lib/parsetools-2.3.2/include/yeccpre.hrl", 0).
 %%
@@ -42,7 +42,7 @@ parse_and_scan({M, F, A}) ->
 
 -spec format_error(any()) -> [char() | list()].
 format_error(Message) ->
-    case io_lib:deep_char_list(Message) of
+    case io_lib:deep_chchico_list(Message) of
         true ->
             Message;
         _ ->
@@ -181,7 +181,7 @@ yecctoken2string1(Other) ->
 
 
 
--file("ar_parser.erl", 184).
+-file("chico_parser.erl", 184).
 
 -dialyzer({nowarn_function, yeccpars2/7}).
 -compile({nowarn_unused_function,  yeccpars2/7}).
@@ -1062,7 +1062,7 @@ yeccgoto_variable_declaration(54=_S, Cat, Ss, Stack, T, Ts, Tzr) ->
 -compile({inline,yeccpars2_1_/1}).
 -dialyzer({nowarn_function, yeccpars2_1_/1}).
 -compile({nowarn_unused_function,  yeccpars2_1_/1}).
--file("ar_parser.yrl", 45).
+-file("chico_parser.yrl", 45).
 yeccpars2_1_(__Stack0) ->
  [___1 | __Stack] = __Stack0,
  [begin
@@ -1072,7 +1072,7 @@ yeccpars2_1_(__Stack0) ->
 -compile({inline,yeccpars2_4_/1}).
 -dialyzer({nowarn_function, yeccpars2_4_/1}).
 -compile({nowarn_unused_function,  yeccpars2_4_/1}).
--file("ar_parser.yrl", 49).
+-file("chico_parser.yrl", 49).
 yeccpars2_4_(__Stack0) ->
  [___1 | __Stack] = __Stack0,
  [begin
@@ -1082,7 +1082,7 @@ yeccpars2_4_(__Stack0) ->
 -compile({inline,yeccpars2_5_/1}).
 -dialyzer({nowarn_function, yeccpars2_5_/1}).
 -compile({nowarn_unused_function,  yeccpars2_5_/1}).
--file("ar_parser.yrl", 44).
+-file("chico_parser.yrl", 44).
 yeccpars2_5_(__Stack0) ->
  [___1 | __Stack] = __Stack0,
  [begin
@@ -1092,7 +1092,7 @@ yeccpars2_5_(__Stack0) ->
 -compile({inline,yeccpars2_6_/1}).
 -dialyzer({nowarn_function, yeccpars2_6_/1}).
 -compile({nowarn_unused_function,  yeccpars2_6_/1}).
--file("ar_parser.yrl", 50).
+-file("chico_parser.yrl", 50).
 yeccpars2_6_(__Stack0) ->
  [___1 | __Stack] = __Stack0,
  [begin
@@ -1102,7 +1102,7 @@ yeccpars2_6_(__Stack0) ->
 -compile({inline,yeccpars2_7_/1}).
 -dialyzer({nowarn_function, yeccpars2_7_/1}).
 -compile({nowarn_unused_function,  yeccpars2_7_/1}).
--file("ar_parser.yrl", 48).
+-file("chico_parser.yrl", 48).
 yeccpars2_7_(__Stack0) ->
  [___1 | __Stack] = __Stack0,
  [begin
@@ -1112,7 +1112,7 @@ yeccpars2_7_(__Stack0) ->
 -compile({inline,yeccpars2_8_/1}).
 -dialyzer({nowarn_function, yeccpars2_8_/1}).
 -compile({nowarn_unused_function,  yeccpars2_8_/1}).
--file("ar_parser.yrl", 39).
+-file("chico_parser.yrl", 39).
 yeccpars2_8_(__Stack0) ->
  [___1 | __Stack] = __Stack0,
  [begin
@@ -1122,7 +1122,7 @@ yeccpars2_8_(__Stack0) ->
 -compile({inline,yeccpars2_9_/1}).
 -dialyzer({nowarn_function, yeccpars2_9_/1}).
 -compile({nowarn_unused_function,  yeccpars2_9_/1}).
--file("ar_parser.yrl", 41).
+-file("chico_parser.yrl", 41).
 yeccpars2_9_(__Stack0) ->
  [___1 | __Stack] = __Stack0,
  [begin
@@ -1132,7 +1132,7 @@ yeccpars2_9_(__Stack0) ->
 -compile({inline,yeccpars2_13_/1}).
 -dialyzer({nowarn_function, yeccpars2_13_/1}).
 -compile({nowarn_unused_function,  yeccpars2_13_/1}).
--file("ar_parser.yrl", 68).
+-file("chico_parser.yrl", 68).
 yeccpars2_13_(__Stack0) ->
  [___1 | __Stack] = __Stack0,
  [begin
@@ -1142,7 +1142,7 @@ yeccpars2_13_(__Stack0) ->
 -compile({inline,yeccpars2_15_/1}).
 -dialyzer({nowarn_function, yeccpars2_15_/1}).
 -compile({nowarn_unused_function,  yeccpars2_15_/1}).
--file("ar_parser.yrl", 69).
+-file("chico_parser.yrl", 69).
 yeccpars2_15_(__Stack0) ->
  [___1 | __Stack] = __Stack0,
  [begin
@@ -1152,7 +1152,7 @@ yeccpars2_15_(__Stack0) ->
 -compile({inline,yeccpars2_17_/1}).
 -dialyzer({nowarn_function, yeccpars2_17_/1}).
 -compile({nowarn_unused_function,  yeccpars2_17_/1}).
--file("ar_parser.yrl", 70).
+-file("chico_parser.yrl", 70).
 yeccpars2_17_(__Stack0) ->
  [___1 | __Stack] = __Stack0,
  [begin
@@ -1162,7 +1162,7 @@ yeccpars2_17_(__Stack0) ->
 -compile({inline,yeccpars2_21_/1}).
 -dialyzer({nowarn_function, yeccpars2_21_/1}).
 -compile({nowarn_unused_function,  yeccpars2_21_/1}).
--file("ar_parser.yrl", 80).
+-file("chico_parser.yrl", 80).
 yeccpars2_21_(__Stack0) ->
  [___4,___3,___2,___1 | __Stack] = __Stack0,
  [begin
@@ -1172,7 +1172,7 @@ yeccpars2_21_(__Stack0) ->
 -compile({inline,yeccpars2_22_/1}).
 -dialyzer({nowarn_function, yeccpars2_22_/1}).
 -compile({nowarn_unused_function,  yeccpars2_22_/1}).
--file("ar_parser.yrl", 82).
+-file("chico_parser.yrl", 82).
 yeccpars2_22_(__Stack0) ->
  [___4,___3,___2,___1 | __Stack] = __Stack0,
  [begin
@@ -1182,7 +1182,7 @@ yeccpars2_22_(__Stack0) ->
 -compile({inline,yeccpars2_23_/1}).
 -dialyzer({nowarn_function, yeccpars2_23_/1}).
 -compile({nowarn_unused_function,  yeccpars2_23_/1}).
--file("ar_parser.yrl", 81).
+-file("chico_parser.yrl", 81).
 yeccpars2_23_(__Stack0) ->
  [___4,___3,___2,___1 | __Stack] = __Stack0,
  [begin
@@ -1192,7 +1192,7 @@ yeccpars2_23_(__Stack0) ->
 -compile({inline,yeccpars2_28_/1}).
 -dialyzer({nowarn_function, yeccpars2_28_/1}).
 -compile({nowarn_unused_function,  yeccpars2_28_/1}).
--file("ar_parser.yrl", 62).
+-file("chico_parser.yrl", 62).
 yeccpars2_28_(__Stack0) ->
  [___1 | __Stack] = __Stack0,
  [begin
@@ -1202,7 +1202,7 @@ yeccpars2_28_(__Stack0) ->
 -compile({inline,yeccpars2_32_/1}).
 -dialyzer({nowarn_function, yeccpars2_32_/1}).
 -compile({nowarn_unused_function,  yeccpars2_32_/1}).
--file("ar_parser.yrl", 66).
+-file("chico_parser.yrl", 66).
 yeccpars2_32_(__Stack0) ->
  [___3,___2,___1 | __Stack] = __Stack0,
  [begin
@@ -1212,7 +1212,7 @@ yeccpars2_32_(__Stack0) ->
 -compile({inline,yeccpars2_33_/1}).
 -dialyzer({nowarn_function, yeccpars2_33_/1}).
 -compile({nowarn_unused_function,  yeccpars2_33_/1}).
--file("ar_parser.yrl", 65).
+-file("chico_parser.yrl", 65).
 yeccpars2_33_(__Stack0) ->
  [___3,___2,___1 | __Stack] = __Stack0,
  [begin
@@ -1222,7 +1222,7 @@ yeccpars2_33_(__Stack0) ->
 -compile({inline,yeccpars2_34_/1}).
 -dialyzer({nowarn_function, yeccpars2_34_/1}).
 -compile({nowarn_unused_function,  yeccpars2_34_/1}).
--file("ar_parser.yrl", 63).
+-file("chico_parser.yrl", 63).
 yeccpars2_34_(__Stack0) ->
  [___2,___1 | __Stack] = __Stack0,
  [begin
@@ -1232,7 +1232,7 @@ yeccpars2_34_(__Stack0) ->
 -compile({inline,yeccpars2_35_/1}).
 -dialyzer({nowarn_function, yeccpars2_35_/1}).
 -compile({nowarn_unused_function,  yeccpars2_35_/1}).
--file("ar_parser.yrl", 58).
+-file("chico_parser.yrl", 58).
 yeccpars2_35_(__Stack0) ->
  [___5,___4,___3,___2,___1 | __Stack] = __Stack0,
  [begin
@@ -1242,7 +1242,7 @@ yeccpars2_35_(__Stack0) ->
 -compile({inline,yeccpars2_37_/1}).
 -dialyzer({nowarn_function, yeccpars2_37_/1}).
 -compile({nowarn_unused_function,  yeccpars2_37_/1}).
--file("ar_parser.yrl", 60).
+-file("chico_parser.yrl", 60).
 yeccpars2_37_(__Stack0) ->
  [___3,___2,___1 | __Stack] = __Stack0,
  [begin
@@ -1252,7 +1252,7 @@ yeccpars2_37_(__Stack0) ->
 -compile({inline,yeccpars2_41_/1}).
 -dialyzer({nowarn_function, yeccpars2_41_/1}).
 -compile({nowarn_unused_function,  yeccpars2_41_/1}).
--file("ar_parser.yrl", 84).
+-file("chico_parser.yrl", 84).
 yeccpars2_41_(__Stack0) ->
  [___1 | __Stack] = __Stack0,
  [begin
@@ -1262,7 +1262,7 @@ yeccpars2_41_(__Stack0) ->
 -compile({inline,yeccpars2_42_/1}).
 -dialyzer({nowarn_function, yeccpars2_42_/1}).
 -compile({nowarn_unused_function,  yeccpars2_42_/1}).
--file("ar_parser.yrl", 85).
+-file("chico_parser.yrl", 85).
 yeccpars2_42_(__Stack0) ->
  [___2,___1 | __Stack] = __Stack0,
  [begin
@@ -1272,7 +1272,7 @@ yeccpars2_42_(__Stack0) ->
 -compile({inline,yeccpars2_46_/1}).
 -dialyzer({nowarn_function, yeccpars2_46_/1}).
 -compile({nowarn_unused_function,  yeccpars2_46_/1}).
--file("ar_parser.yrl", 94).
+-file("chico_parser.yrl", 94).
 yeccpars2_46_(__Stack0) ->
  [___7,___6,___5,___4,___3,___2,___1 | __Stack] = __Stack0,
  [begin
@@ -1282,7 +1282,7 @@ yeccpars2_46_(__Stack0) ->
 -compile({inline,yeccpars2_52_/1}).
 -dialyzer({nowarn_function, yeccpars2_52_/1}).
 -compile({nowarn_unused_function,  yeccpars2_52_/1}).
--file("ar_parser.yrl", 113).
+-file("chico_parser.yrl", 113).
 yeccpars2_52_(__Stack0) ->
  [___7,___6,___5,___4,___3,___2,___1 | __Stack] = __Stack0,
  [begin
@@ -1292,7 +1292,7 @@ yeccpars2_52_(__Stack0) ->
 -compile({inline,yeccpars2_56_/1}).
 -dialyzer({nowarn_function, yeccpars2_56_/1}).
 -compile({nowarn_unused_function,  yeccpars2_56_/1}).
--file("ar_parser.yrl", 104).
+-file("chico_parser.yrl", 104).
 yeccpars2_56_(__Stack0) ->
  [___8,___7,___6,___5,___4,___3,___2,___1 | __Stack] = __Stack0,
  [begin
@@ -1302,7 +1302,7 @@ yeccpars2_56_(__Stack0) ->
 -compile({inline,yeccpars2_57_/1}).
 -dialyzer({nowarn_function, yeccpars2_57_/1}).
 -compile({nowarn_unused_function,  yeccpars2_57_/1}).
--file("ar_parser.yrl", 52).
+-file("chico_parser.yrl", 52).
 yeccpars2_57_(__Stack0) ->
  [___2,___1 | __Stack] = __Stack0,
  [begin
@@ -1312,7 +1312,7 @@ yeccpars2_57_(__Stack0) ->
 -compile({inline,yeccpars2_58_/1}).
 -dialyzer({nowarn_function, yeccpars2_58_/1}).
 -compile({nowarn_unused_function,  yeccpars2_58_/1}).
--file("ar_parser.yrl", 46).
+-file("chico_parser.yrl", 46).
 yeccpars2_58_(__Stack0) ->
  [___2,___1 | __Stack] = __Stack0,
  [begin
@@ -1322,7 +1322,7 @@ yeccpars2_58_(__Stack0) ->
 -compile({inline,yeccpars2_62_/1}).
 -dialyzer({nowarn_function, yeccpars2_62_/1}).
 -compile({nowarn_unused_function,  yeccpars2_62_/1}).
--file("ar_parser.yrl", 73).
+-file("chico_parser.yrl", 73).
 yeccpars2_62_(__Stack0) ->
  [___1 | __Stack] = __Stack0,
  [begin
@@ -1332,7 +1332,7 @@ yeccpars2_62_(__Stack0) ->
 -compile({inline,yeccpars2_64_/1}).
 -dialyzer({nowarn_function, yeccpars2_64_/1}).
 -compile({nowarn_unused_function,  yeccpars2_64_/1}).
--file("ar_parser.yrl", 72).
+-file("chico_parser.yrl", 72).
 yeccpars2_64_(__Stack0) ->
  [___1 | __Stack] = __Stack0,
  [begin
@@ -1342,7 +1342,7 @@ yeccpars2_64_(__Stack0) ->
 -compile({inline,yeccpars2_65_/1}).
 -dialyzer({nowarn_function, yeccpars2_65_/1}).
 -compile({nowarn_unused_function,  yeccpars2_65_/1}).
--file("ar_parser.yrl", 78).
+-file("chico_parser.yrl", 78).
 yeccpars2_65_(__Stack0) ->
  [___3,___2,___1 | __Stack] = __Stack0,
  [begin
@@ -1352,7 +1352,7 @@ yeccpars2_65_(__Stack0) ->
 -compile({inline,yeccpars2_67_/1}).
 -dialyzer({nowarn_function, yeccpars2_67_/1}).
 -compile({nowarn_unused_function,  yeccpars2_67_/1}).
--file("ar_parser.yrl", 75).
+-file("chico_parser.yrl", 75).
 yeccpars2_67_(__Stack0) ->
  [___1 | __Stack] = __Stack0,
  [begin
@@ -1362,7 +1362,7 @@ yeccpars2_67_(__Stack0) ->
 -compile({inline,yeccpars2_68_/1}).
 -dialyzer({nowarn_function, yeccpars2_68_/1}).
 -compile({nowarn_unused_function,  yeccpars2_68_/1}).
--file("ar_parser.yrl", 56).
+-file("chico_parser.yrl", 56).
 yeccpars2_68_(__Stack0) ->
  [___3,___2,___1 | __Stack] = __Stack0,
  [begin
@@ -1372,7 +1372,7 @@ yeccpars2_68_(__Stack0) ->
 -compile({inline,yeccpars2_69_/1}).
 -dialyzer({nowarn_function, yeccpars2_69_/1}).
 -compile({nowarn_unused_function,  yeccpars2_69_/1}).
--file("ar_parser.yrl", 76).
+-file("chico_parser.yrl", 76).
 yeccpars2_69_(__Stack0) ->
  [___2,___1 | __Stack] = __Stack0,
  [begin
@@ -1382,7 +1382,7 @@ yeccpars2_69_(__Stack0) ->
 -compile({inline,yeccpars2_70_/1}).
 -dialyzer({nowarn_function, yeccpars2_70_/1}).
 -compile({nowarn_unused_function,  yeccpars2_70_/1}).
--file("ar_parser.yrl", 55).
+-file("chico_parser.yrl", 55).
 yeccpars2_70_(__Stack0) ->
  [___4,___3,___2,___1 | __Stack] = __Stack0,
  [begin
@@ -1392,7 +1392,7 @@ yeccpars2_70_(__Stack0) ->
 -compile({inline,yeccpars2_71_/1}).
 -dialyzer({nowarn_function, yeccpars2_71_/1}).
 -compile({nowarn_unused_function,  yeccpars2_71_/1}).
--file("ar_parser.yrl", 54).
+-file("chico_parser.yrl", 54).
 yeccpars2_71_(__Stack0) ->
  [___3,___2,___1 | __Stack] = __Stack0,
  [begin
@@ -1402,7 +1402,7 @@ yeccpars2_71_(__Stack0) ->
 -compile({inline,yeccpars2_72_/1}).
 -dialyzer({nowarn_function, yeccpars2_72_/1}).
 -compile({nowarn_unused_function,  yeccpars2_72_/1}).
--file("ar_parser.yrl", 42).
+-file("chico_parser.yrl", 42).
 yeccpars2_72_(__Stack0) ->
  [___2,___1 | __Stack] = __Stack0,
  [begin
@@ -1412,7 +1412,7 @@ yeccpars2_72_(__Stack0) ->
 -compile({inline,yeccpars2_73_/1}).
 -dialyzer({nowarn_function, yeccpars2_73_/1}).
 -compile({nowarn_unused_function,  yeccpars2_73_/1}).
--file("ar_parser.yrl", 47).
+-file("chico_parser.yrl", 47).
 yeccpars2_73_(__Stack0) ->
  [___2,___1 | __Stack] = __Stack0,
  [begin
@@ -1420,4 +1420,4 @@ yeccpars2_73_(__Stack0) ->
   end | __Stack].
 
 
--file("ar_parser.yrl", 120).
+-file("chico_parser.yrl", 120).

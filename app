@@ -4,7 +4,7 @@
 
 % If not is passed as parameter, the REPL is started
 main([]) -> 
-  ar_repl:execute(),
+  chico_repl:execute(),
   io:format("(\\\/)~n");
 
 %% If --compile option is passed, the file specified is computed
@@ -12,7 +12,7 @@ main([]) ->
 %%   $ chico --compile test.ch
 %%   $ [success]: "file compiled successfully"
 main([Option, Value]) when Option == "--compile" ->
-  ar_compiler:read_file(Value);
+  chico_compiler:read_file(Value);
 
 main([Option]) when Option == "--compile" ->
   io:format("Missing file for compile~n");

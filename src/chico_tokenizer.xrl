@@ -10,7 +10,7 @@ W = [\s\t\n\r]
 
 Rules.
 {W}+ : skip_token.
-#(\\\^.|\\.|[^"])*# : skip_token.
+#(\\\^.|\\.|[^"])+# : skip_token.
 
 fun    : {token, {function, TokenLine, none}}.
 \(     : {token, {left_parenthesis, TokenLine, none}}.
