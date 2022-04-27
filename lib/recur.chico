@@ -1,10 +1,10 @@
 fun recur (F) -> 
-  fun Recursion (X) ->
+  let Recursion = fun (X) ->
     apply X X done
   done
 
-  fun Bind (X) ->
-    fun Inner (Y) ->
+  let Bind = fun (X) ->
+    let Inner = fun (Y) ->
       let A = apply X X done
       apply A Y done
     done
@@ -14,3 +14,9 @@ fun recur (F) ->
 
   apply Recursion Bind done
 done
+
+fun start () -> 
+  1 done 
+done
+
+export recur

@@ -22,6 +22,7 @@ with   : {token, {with, TokenLine, none}}.
 
 "(\\\^.|\\.|[^"])*" : {token, {string, TokenLine, get_string(TokenChars, TokenLen)}}.
 
+export : {token, {export, TokenLine, export}}.
 apply  : {token, {apply, TokenLine, apply}}.
 \+     : {token, {operator, TokenLine, '+'}}.
 \-     : {token, {operator, TokenLine, '-'}}.

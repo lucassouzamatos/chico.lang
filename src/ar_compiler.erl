@@ -1,6 +1,8 @@
 -module(ar_compiler).
 -export([read_file/1]).
 
+-include("chico.hrl").
+
 trace(Type, Value) -> io:format("[~p]: ~p~n", [Type, Value]).
 
 trace_file_read_error() -> 
@@ -19,9 +21,22 @@ write_file(M, B) -> file:write_file(M ++ ".beam", B).
 
 run(Generated) -> trace(result, Generated:start()).
 
-construct_form(M, C) -> 
-  [{attribute,1,module,list_to_atom(M)},
-   {attribute,1,export,[{start,0}]}] ++ C.
+get_function(N, #ar_parser_env{functions=Functions} = _) ->
+  lists:search(fun ({Name, _}) -> Name == N end, Functions).
+
+default_bootstrap(M) -> [
+  {attribute,1,module,list_to_atom(M)}, 
+  {attribute,1,export,[{start, 0}]}].
+
+construct_form(M, C, #ar_parser_env{exported_functions=ExportedFunctions} = Env) -> 
+  Exported = lists:map(
+    fun (E) ->
+      {value, {N, A}} = get_function(E, Env),
+      {attribute,1,export,[{N, A}]} 
+    end, 
+    ExportedFunctions
+  ),
+  default_bootstrap(M) ++ Exported ++ C.
 
 hydrate_module_name(N) ->
   string:lowercase(string:replace(N, ".chico", "")).
@@ -35,7 +50,7 @@ compile_file(Source, Filename) ->
   
   ParserEnv = ar_parser_env:check(Parsed),
   Translated = ar_translate:translate(Parsed, ParserEnv),
-  Forms = construct_form(Module, Translated),
+  Forms = construct_form(Module, Translated, ParserEnv),
 
   { ok, Generated, Bin } = compile:forms(Forms),
   

@@ -59,6 +59,9 @@ rewrite({integer, Line, Value}, _) ->
 rewrite({float, Line, Value}, _) ->
   [{float, Line, Value}];
 
+rewrite({export, _}, _) ->
+  [];
+
 rewrite({{variable, Line, _}, {_, _, Name}, {apply, ApplyArgs}}, E) ->
   [Arguments] = rewrite({apply, ApplyArgs}, E),
   [{match, Line, {var, Line, Name}, Arguments}];
@@ -72,11 +75,14 @@ rewrite({{variable, Line, _}, {_, _, Name}, R}, _) ->
   [{match, Line, {var, Line, Name}, R}];
 
 rewrite({declaration, Line, Name}, Env) -> 
-  IsFun = lists:member(Name, Env#ar_parser_env.functions),
-
+  IsFun = lists:search(
+    fun ({N, _}) -> N == Name end, 
+    Env#ar_parser_env.functions
+  ),
+  
   case IsFun of
-    true -> [{atom, Line, Name}];
-    _ -> [{var, Line, Name}]
+    false -> [{var, Line, Name}];
+    _ -> [{atom, Line, Name}]
   end;
 
 rewrite({{function, Line, _}, Arguments, Body}, E) ->

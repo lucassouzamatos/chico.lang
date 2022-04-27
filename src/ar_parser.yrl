@@ -14,6 +14,7 @@ Nonterminals
   clause_declaration
   clause_declarations
   guard
+  export_declaration
 .
 
 Terminals
@@ -31,6 +32,7 @@ Terminals
   string
   match
   with
+  export
   done
 .
 
@@ -49,6 +51,9 @@ application -> declaration done : '$1'.
 application -> value done : '$1'.
 application -> call : '$1'.
 application -> match_declaration : '$1'.
+application -> export_declaration : '$1'.
+
+export_declaration -> export declaration : {export, '$2'}.
 
 call -> apply operation done : {apply, '$2'}.
 call -> apply declaration operation_values done : {apply, '$2', '$3'}.

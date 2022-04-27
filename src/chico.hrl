@@ -1,3 +1,4 @@
 -record(ar_parser_env, {
-  functions = []
+  functions = [],
+  exported_functions = []
 }).
