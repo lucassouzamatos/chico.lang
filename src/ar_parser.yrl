@@ -78,9 +78,19 @@ operation -> operator operation_value operation_value : {'$1', '$2', '$3'}.
 
 variable_declaration -> variable declaration assigment value : {'$1', '$2', '$4'}.
 variable_declaration -> variable declaration assigment call : {'$1', '$2', '$4'}.
+variable_declaration -> variable declaration assigment function_declaration : {'$1', '$2', '$4'}.
 
 declarations -> declaration : ['$1'].
 declarations -> declaration declarations : ['$1' | '$2'].
+
+function_declaration -> 
+  function 
+  left_parenthesis 
+  declarations 
+  right_parenthesis 
+  open_function
+  applications
+  done : {'$1', '$3', '$6'}.
 
 function_declaration -> 
   function 
@@ -102,6 +112,3 @@ function_declaration ->
   done : {'$1', '$2', [], '$6'}.
   
 Erlang code.
-
-spread(A, B) -> 
-  list_to_tuple(tuple_to_list(A) ++ tuple_to_list(B)).

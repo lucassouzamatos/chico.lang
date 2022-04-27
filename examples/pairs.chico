@@ -1,26 +1,25 @@
-fun pair (X) ->
-  fun A (Y) ->
-    fun B (F) ->
+fun start () ->
+  let pair = fun (X Y) ->
+    fun (F) ->
       let Bind = apply F X done
       apply Bind Y done
     done
   done
-done
 
-fun first (X) ->
-  fun A (Y) ->
-    X done
+  let first = fun (X) ->
+    fun (Y) ->
+      X done
+    done
   done
-done
 
-fun second (X) ->
-  fun A (Y) ->
-    Y done
+  let second = fun (X) ->
+    fun (Y) ->
+      Y done
+    done
   done
+
+  let completed = apply pair 1 7 done
+
+  apply completed first done
+  apply completed second done
 done
-
-let partial = apply pair 1 done
-let completed = apply partial 5 done
-
-apply completed first done
-apply completed second done

@@ -1,7 +1,10 @@
 -module(ar_translate).
--export([translate/1]).
+-export([translate/2]).
 
 -compile({no_auto_import,[apply/2]}).
+-compile({no_auto_import,[apply/3]}).
+
+-include("chico.hrl").
 
 spread(A, B) -> 
   list_to_tuple(tuple_to_list(A) ++ tuple_to_list(B)).
@@ -16,70 +19,72 @@ apply(Body) ->
     _ -> error
   end.
 
-apply(Body, []) -> 
-  case Body of 
-    {declaration, Line, Declaration} ->
-      {call, Line, {var, Line, Declaration}, []}; 
-      _ -> error
-  end;
+apply({declaration, Line, Declaration}, [], Env) ->
+  [Dec] = rewrite({declaration, Line, Declaration}, Env),
+  {call, Line, Dec, []};
 
-apply(Body, Args) -> 
-  case Body of 
-    {declaration, Line, Declaration} ->
-      {call, Line, {var, Line, Declaration}, translate(Args)}; 
-    _ -> error
-  end.
+apply({declaration, Line, Declaration}, Args, Env) -> 
+  [Dec] = rewrite({declaration, Line, Declaration}, Env),
+  {call, Line, Dec, translate(Args, Env)}.
 
-guard(Pattern, Body) -> 
-  {rewrite(Pattern), [], translate(Body)}.
+guard(Pattern, Body, E) -> 
+  {rewrite(Pattern, E), [], translate(Body, E)}.
 
-clause({GuardPattern, GuardBody}) ->
-  spread({clause, 1}, guard(GuardPattern, GuardBody)).
+clause({GuardPattern, GuardBody}, E) ->
+  spread({clause, 1}, guard(GuardPattern, GuardBody, E)).
 
-match(Body) -> 
+match(Body, E) -> 
   case Body of
-    [{{guard, GuardPattern}, GuardBody} | Rest] -> [clause({GuardPattern, GuardBody})] ++ match(Rest);
+    [{{guard, GuardPattern}, GuardBody} | Rest] -> [clause({GuardPattern, GuardBody}, E)] ++ match(Rest, E);
     _ -> []
   end.
 
-translate([]) -> [];
-translate([C]) -> rewrite(C);
-translate([C|Rest]) -> rewrite(C) ++ translate(Rest).
+anon_function(Line, Arguments, Body, E) -> 
+  {clauses, [{clause, Line, translate(Arguments, E), [], translate(Body, E)}]}.
 
-rewrite({{match, _, _}, Expr, Body}) -> 
-  [A] = rewrite(Expr),
-  [{'case', 1, A, match(Body)}];
+translate([], _) -> [];
+translate([C], #ar_parser_env{} = E) -> rewrite(C, E);
+translate([C|Rest], #ar_parser_env{} = Env) -> rewrite(C, Env) ++ translate(Rest, Env).
 
-rewrite({apply, Body, Args}) -> [apply(Body, Args)];
-rewrite({apply, Body}) -> [apply(Body)];
+rewrite({{match, _, _}, Expr, Body}, E) -> 
+  [A] = rewrite(Expr, E),
+  [{'case', 1, A, match(Body, E)}];
 
-rewrite({integer, Line, Value}) ->
+rewrite({apply, Body, Args}, E) -> [apply(Body, Args, E)];
+rewrite({apply, Body}, _) -> [apply(Body)];
+
+rewrite({integer, Line, Value}, _) ->
   [{integer, Line, Value}];
 
-rewrite({float, Line, Value}) ->
+rewrite({float, Line, Value}, _) ->
   [{float, Line, Value}];
 
-rewrite({{variable, Line, _}, {_, _, Name}, {apply, ApplyArgs}}) ->
-  [Arguments] = rewrite({apply, ApplyArgs}),
+rewrite({{variable, Line, _}, {_, _, Name}, {apply, ApplyArgs}}, E) ->
+  [Arguments] = rewrite({apply, ApplyArgs}, E),
   [{match, Line, {var, Line, Name}, Arguments}];
-rewrite({{variable, Line, _}, {_, _, Name}, {apply, ApplyArgs, ApplyArgs1}}) ->
-  [Arguments] = rewrite({apply, ApplyArgs, ApplyArgs1}),
+rewrite({{variable, Line, _}, {_, _, Name}, {apply, ApplyArgs, ApplyArgs1}}, E) ->
+  [Arguments] = rewrite({apply, ApplyArgs, ApplyArgs1}, E),
   [{match, Line, {var, Line, Name}, Arguments}];
-rewrite({{variable, Line, _}, {_, _, Name}, R}) ->
+rewrite({{variable, Line, _}, {_, _, Name}, {{function, Line, FName}, Arguments, Body}}, E) ->
+  [FArguments] = rewrite({{function, Line, FName}, Arguments, Body}, E),
+  [{match, Line, {var, Line, Name}, FArguments}];
+rewrite({{variable, Line, _}, {_, _, Name}, R}, _) ->
   [{match, Line, {var, Line, Name}, R}];
 
-rewrite({declaration, Line, Name}) -> 
-  [{var, Line, Name}];
+rewrite({declaration, Line, Name}, Env) -> 
+  IsFun = lists:member(Name, Env#ar_parser_env.functions),
 
-rewrite({{function, Line, _}, {_, _, Name}, Arguments, Body}) ->
-  [{match, Line,
-            {var, Line, Name},
-            {'fun',Line,
-                   {clauses,[{clause,Line,
-                                     translate(Arguments),
-                                     [],
-                                     translate(Body)}]}}}].
+  case IsFun of
+    true -> [{atom, Line, Name}];
+    _ -> [{var, Line, Name}]
+  end;
 
+rewrite({{function, Line, _}, Arguments, Body}, E) ->
+  [{'fun', Line, anon_function(Line, Arguments, Body, E)}];
+rewrite({{function, Line, _}, {_, _, Name}, Arguments, Body}, E) ->
+  [{function, Line, Name, 
+      length(Arguments), 
+      [{clause, Line, translate(Arguments, E), [], translate(Body, E)}]}].
 
 unwrap_hand_side({Type, Line, Value}) when Type == declaration -> 
   {var,Line,Value};
