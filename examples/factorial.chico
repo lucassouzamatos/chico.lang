@@ -1,21 +1,4 @@
-fun start () ->
-  let recur = fun (F) -> 
-    let Recursion = fun (X) ->
-      apply X X done
-    done
-
-    let Bind = fun (X) ->
-      let Inner = fun (Y) ->
-        let A = apply X X done
-        apply A Y done
-      done
-
-      apply F Inner done
-    done
-
-    apply Recursion Bind done
-  done
-
+fun factorial (V) -> 
   let builder = fun (Self) ->
     fun (N) ->
       match N with
@@ -29,7 +12,11 @@ fun start () ->
     done
   done
 
-  let factorial = apply recur builder done
+  let bind = apply recur.wrap builder done
+  apply bind V done
+done
 
-  apply factorial 4 done
+fun start () ->
+  let result = apply factorial 4 done
+  apply erlang.display result done
 done
