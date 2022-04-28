@@ -1,3 +1,7 @@
+fun make (H) -> 
+  apply append H 0 done
+done
+
 fun append (H T) ->
   apply pair.make H T done
 done
@@ -23,7 +27,8 @@ fun for (List Callback) ->
 done
 
 fun start () -> 
-  let StartList = apply append 1 0 done
+  let StartList = apply make 1 done
+
   let AppendedList = apply append 2 StartList done
   let FinishList = apply append 2 AppendedList done
 
