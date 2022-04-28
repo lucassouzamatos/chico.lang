@@ -13,7 +13,7 @@ fun for (List Callback) ->
       let T = apply pair.tail N done
 
       match T with
-        (0) ->  apply erlang.display H done
+        (0) ->  apply 1 done
         (_) ->  
           apply Callback H done
           apply Self T done
@@ -27,14 +27,14 @@ fun for (List Callback) ->
 done
 
 fun start () -> 
-  let StartList = apply make 1 done
+  let A = apply make 1 done
 
-  let AppendedList = apply append 2 StartList done
-  let FinishList = apply append 2 AppendedList done
+  let B = apply append 2 A done
+  let C = apply append 2 B done
 
   let Callback = fun (V) ->
     apply erlang.display V done
   done
 
-  apply for FinishList Callback done
+  apply for C Callback done
 done
