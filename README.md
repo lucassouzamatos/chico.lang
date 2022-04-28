@@ -15,9 +15,9 @@ $ 13
 Or create and use functions:
 
 ```
-$ chico>fun T () -> 1 done done
+$ chico> fun T () -> 1 done done
 $ #Fun<erl_eval.45.65746770>
-$ chico>apply T done
+$ chico> apply T done
 $ 1
 ```
 
@@ -43,11 +43,16 @@ After this, you should compile files:
 $ make
 ```
 
-And run the application:
+And install with:
 
 ```
-$ make run
+$ make install
 ```
+
+In the next, you can compile single files or entire folder with:
+```
+$ chico --compile <file|folder>
+``` 
 
 ## Documentation
 
@@ -95,7 +100,7 @@ If you wanna return a closure function, you can return an another function direc
 
 ```
 fun builder(Self) ->
-  fun Apply (N) ->
+  fun (N) ->
     match N with
       (1) -> 1 done
       (_) -> 
@@ -105,5 +110,25 @@ fun builder(Self) ->
         apply * N Y done
     done
   done
+done
+```
+
+When you need export any function for uses in another codes, you can only:
+
+```
+# Filename: random.chico
+
+fun test () ->
+  1 done
+done
+
+export test
+```
+
+And import in another files, with just:
+
+```
+fun start () -> 
+  apply random.test done
 done
 ```
