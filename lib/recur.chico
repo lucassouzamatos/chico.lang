@@ -17,7 +17,7 @@ fun recur (F) ->
 done
 
 fun start () -> 
-  1 done 
+  "recur file executed" done 
 done
 
 export recur

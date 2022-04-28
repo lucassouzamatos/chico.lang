@@ -1,6 +1,6 @@
 #!/usr/bin/env escript
 %% -*- erlang -*-
-%%! -pa ./ebin -Wall
+%%! -pa /usr/chicolang/bin -Wall
 
 % If not is passed as parameter, the REPL is started
 main([]) -> 

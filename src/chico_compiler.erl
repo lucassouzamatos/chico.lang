@@ -12,8 +12,10 @@ trace_success_compilation() ->
   trace(success, "File compiled successfully").
 
 read_file(F) -> 
-  case file:read_file(F) of
-    {ok, Source} -> compile_file(Source, F);
+  {ok, Cwd} = file:get_cwd(),
+  File = filename:join(Cwd, F),
+  case file:read_file(File) of
+    {ok, Source} -> compile_file(Source, File);
     _ -> trace_file_read_error()
   end.
 
@@ -38,11 +40,8 @@ construct_form(M, C, #chico_parser_env{exported_functions=ExportedFunctions} = E
   ),
   default_bootstrap(M) ++ Exported ++ C.
 
-hydrate_module_name(N) ->
-  string:lowercase(string:replace(N, ".chico", "")).
-
 compile_file(Source, Filename) -> 
-  Module = hydrate_module_name(Filename),
+  Module = filename:basename(Filename, ".chico"),
   Content = unicode:characters_to_list(Source),
 
   {ok, Tokens, _} = chico_tokenizer:string(Content),

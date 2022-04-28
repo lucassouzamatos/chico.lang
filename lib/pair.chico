@@ -1,0 +1,35 @@
+fun pair (X Y) ->
+  fun (F) ->
+    let Bind = apply F X done
+    apply Bind Y done
+  done
+done
+
+fun key (P) -> 
+  let Get = fun (X) ->
+    fun (Y) ->
+      X done
+    done
+  done
+
+  apply P Get done
+done
+
+fun value (P) -> 
+  let Get = fun (X) ->
+    fun (Y) ->
+      Y done
+    done
+  done
+
+  apply P Get done
+done
+
+fun start () -> 
+  let P = apply pair 1 2 done
+  
+  let K = apply key P done
+  let V = apply key P done
+
+  K done 
+done
