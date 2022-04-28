@@ -15,6 +15,7 @@ Nonterminals
   clause_declarations
   guard
   export_declaration
+  module_function_call
 .
 
 Terminals
@@ -33,6 +34,7 @@ Terminals
   match
   with
   export
+  dot
   done
 .
 
@@ -55,6 +57,10 @@ application -> export_declaration : '$1'.
 
 export_declaration -> export declaration : {export, '$2'}.
 
+module_function_call -> declaration dot declaration :  {module_function_call, '$1', '$3', []}.
+module_function_call -> declaration dot declaration operation_values :  {module_function_call, '$1', '$3', '$4'}.
+
+call -> apply module_function_call done : {apply, '$2'}.
 call -> apply operation done : {apply, '$2'}.
 call -> apply declaration operation_values done : {apply, '$2', '$3'}.
 call -> apply declaration done : {apply, '$2', []}.

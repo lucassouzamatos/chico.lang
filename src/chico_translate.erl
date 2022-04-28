@@ -12,7 +12,11 @@ spread(A, B) ->
 operation(Operation, {L, R}) ->
   {Operation, unwrap_hand_side(L), unwrap_hand_side(R)}.
 
-apply(Body) -> 
+apply({module_function_call, {declaration, Line, DeclModule}, {declaration, _, DeclFun}}, _) ->
+  {call, Line, {remote, Line, {atom, Line, DeclModule}, {atom, Line, DeclFun}}, []};
+apply({module_function_call, {declaration, Line, DeclModule}, {declaration, _, DeclFun}, Body}, Env) ->
+  {call, Line, {remote, Line, {atom, Line, DeclModule}, {atom, Line, DeclFun}}, translate(Body, Env)};
+apply(Body, _) -> 
   case Body of 
     {{operator, Line, Operation}, L, R} -> 
       spread({op, Line}, operation(Operation, {L, R}));
@@ -51,7 +55,7 @@ rewrite({{match, _, _}, Expr, Body}, E) ->
   [{'case', 1, A, match(Body, E)}];
 
 rewrite({apply, Body, Args}, E) -> [apply(Body, Args, E)];
-rewrite({apply, Body}, _) -> [apply(Body)];
+rewrite({apply, Body}, E) -> [apply(Body, E)];
 
 rewrite({integer, Line, Value}, _) ->
   [{integer, Line, Value}];
@@ -96,4 +100,3 @@ unwrap_hand_side({Type, Line, Value}) when Type == declaration ->
   {var,Line,Value};
 unwrap_hand_side({Type, Line, Value}) ->
   {Type, Line, Value}.
-  

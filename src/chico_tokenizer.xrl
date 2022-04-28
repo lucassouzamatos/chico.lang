@@ -7,10 +7,13 @@ A = ({U}|{L})
 F = (\+|-)?[0-9]+\.[0-9]+
 I = (\+|-)?[0-9]*
 W = [\s\t\n\r] 
+D = \.
 
 Rules.
 {W}+ : skip_token.
 #(\\\^.|\\.|[^"])+# : skip_token.
+
+{D}    : {token, {dot, TokenLine, none}}.
 
 fun    : {token, {function, TokenLine, none}}.
 \(     : {token, {left_parenthesis, TokenLine, none}}.

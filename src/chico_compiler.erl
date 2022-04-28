@@ -19,7 +19,7 @@ read_file(F) ->
 
 write_file(M, B) -> file:write_file(M ++ ".beam", B).
 
-run(Generated) -> trace(result, Generated:start()).
+run(Generated) -> Generated:start().
 
 get_function(N, #chico_parser_env{functions=Functions} = _) ->
   lists:search(fun ({Name, _}) -> Name == N end, Functions).
@@ -47,9 +47,10 @@ compile_file(Source, Filename) ->
 
   {ok, Tokens, _} = chico_tokenizer:string(Content),
   {ok, Parsed } = chico_parser:parse(Tokens),
-  
+
   ParserEnv = chico_parser_env:check(Parsed),
   Translated = chico_translate:translate(Parsed, ParserEnv),
+
   Forms = construct_form(Module, Translated, ParserEnv),
 
   { ok, Generated, Bin } = compile:forms(Forms),
