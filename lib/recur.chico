@@ -1,4 +1,4 @@
-fun recur (F) -> 
+fun wrap (F) -> 
   let Recursion = fun (X) ->
     apply X X done
   done
@@ -17,7 +17,7 @@ fun recur (F) ->
 done
 
 fun start () -> 
-  "recur file executed" done 
+  1 done 
 done
 
-export recur
+export wrap

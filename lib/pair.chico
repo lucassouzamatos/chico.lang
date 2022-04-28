@@ -1,11 +1,11 @@
-fun pair (X Y) ->
+fun make (X Y) ->
   fun (F) ->
     let Bind = apply F X done
     apply Bind Y done
   done
 done
 
-fun key (P) -> 
+fun head (P) -> 
   let Get = fun (X) ->
     fun (Y) ->
       X done
@@ -15,7 +15,7 @@ fun key (P) ->
   apply P Get done
 done
 
-fun value (P) -> 
+fun tail (P) -> 
   let Get = fun (X) ->
     fun (Y) ->
       Y done
@@ -26,10 +26,17 @@ fun value (P) ->
 done
 
 fun start () -> 
-  let P = apply pair 1 2 done
-  
-  let K = apply key P done
-  let V = apply key P done
+  let P = apply make 1 2 done
 
-  K done 
+  let K = apply head P done
+  let V = apply tail P done
+
+  apply erlang.display K done
+  apply erlang.display V done
+
+  1 done
 done
+
+export make
+export head
+export tail
