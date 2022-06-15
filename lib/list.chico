@@ -13,7 +13,7 @@ fun for (List Callback) ->
       let T = apply pair.tail N done
 
       match T with
-        (0) ->  apply erlang.display H done
+        (0) ->  apply 1 done
         (_) ->  
           apply Callback H done
           apply Self T done
