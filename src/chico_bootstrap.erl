@@ -14,8 +14,9 @@ compile_lib_file(Filename) ->
   File = filename:join(Cwd, Filename),
 
   case file:read_file(File) of
-    {ok, Source} -> 
+    {ok, Source} ->
       { Module, Bin, _ } = chico_compiler:compile_file(Source, File),
-      file:write_file(filename:join("/usr/chicolang/bin", Module ++ ".beam"), Bin);
+      Dest = filename:join("/usr/chicolang/bin", Module ++ ".beam"),
+      file:write_file(Dest, Bin);
     _ -> error
   end.

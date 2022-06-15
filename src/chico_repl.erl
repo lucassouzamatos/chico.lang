@@ -12,7 +12,14 @@ do(Source, Binding) ->
   ParserEnv = chico_parser_env:check(Parsed),
 
   Translated = chico_translate:translate(Parsed, ParserEnv),
-  NewBinding = chico_evaluate:eval(Translated, Binding),
+  NewBinding = eval(Translated, Binding),
 
   do(io:get_line("chico>"), NewBinding).
+
+trace(V) -> erlang:display(V).
+
+eval(Exprs, Binding) -> 
+  {value, Value, NewBinding} = erl_eval:exprs(Exprs, Binding),
+  trace(Value),
+  NewBinding.
 
