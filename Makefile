@@ -9,6 +9,8 @@ install: uninstall compile
 	sudo cp -r ebin /usr/chicolang/bin
 	sudo cp app /usr/bin/chico
 
+	sudo chico --install
+
 uninstall: 
 	sudo rm -rf /usr/chicolang
 	sudo rm -rf /usr/bin/chico
