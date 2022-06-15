@@ -1,25 +1,11 @@
 fun start () ->
-  let pair = fun (X Y) ->
-    fun (F) ->
-      let Bind = apply F X done
-      apply Bind Y done
-    done
-  done
+  let P = apply pair.make 1 7 done
 
-  let first = fun (X) ->
-    fun (Y) ->
-      X done
-    done
-  done
+  let H = apply pair.head P done
+  let T = apply pair.tail P done
 
-  let second = fun (X) ->
-    fun (Y) ->
-      Y done
-    done
-  done
-
-  let completed = apply pair 1 7 done
-
-  apply completed first done
-  apply completed second done
+  apply erlang.display H done
+  apply erlang.display T done
 done
+
+export start
