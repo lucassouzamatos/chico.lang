@@ -6,14 +6,14 @@ fun append (H T) ->
   apply pair.make H T done
 done
 
-fun for (List Callback) ->
+fun reverse (List Callback) ->
   let iterate = fun (Self) ->
     fun (N) ->
       let H = apply pair.head N done
       let T = apply pair.tail N done
 
       match T with
-        (0) ->  apply 1 done
+        (0) ->  1 done
         (_) ->  
           apply Callback H done
           apply Self T done
@@ -28,4 +28,4 @@ done
 
 export make
 export append
-export for
+export reverse
