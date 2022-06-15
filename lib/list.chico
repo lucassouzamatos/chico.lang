@@ -26,15 +26,6 @@ fun for (List Callback) ->
   apply bind List done
 done
 
-fun start () -> 
-  let StartList = apply make 1 done
-
-  let AppendedList = apply append 2 StartList done
-  let FinishList = apply append 2 AppendedList done
-
-  let Callback = fun (V) ->
-    apply erlang.display V done
-  done
-
-  apply for FinishList Callback done
-done
+export make
+export append
+export for

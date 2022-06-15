@@ -15,8 +15,4 @@ fun wrap (F) ->
   apply Recursion Bind done
 done
 
-fun start () -> 
-  1 done 
-done
-
 export wrap

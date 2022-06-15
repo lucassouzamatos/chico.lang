@@ -25,18 +25,6 @@ fun tail (P) ->
   apply P Get done
 done
 
-fun start () -> 
-  let P = apply make 1 2 done
-
-  let K = apply head P done
-  let V = apply tail P done
-
-  apply erlang.display K done
-  apply erlang.display V done
-
-  1 done
-done
-
 export make
 export head
 export tail

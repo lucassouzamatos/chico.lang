@@ -7,6 +7,9 @@ main([]) ->
   chico_repl:execute(),
   io:format("(\\\/)~n");
 
+main([Option]) when Option == "--install" ->
+  chico_bootstrap:start();
+
 %% If --compile option is passed, the file specified is computed
 %% Example:
 %%   $ chico --compile test.ch

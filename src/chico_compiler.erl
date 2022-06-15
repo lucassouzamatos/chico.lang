@@ -1,5 +1,6 @@
 -module(chico_compiler).
 -export([read_file/1]).
+-export([compile_file/2]).
 
 -include("chico.hrl").
 
@@ -14,8 +15,14 @@ trace_success_compilation() ->
 read_file(F) -> 
   {ok, Cwd} = file:get_cwd(),
   File = filename:join(Cwd, F),
+
   case file:read_file(File) of
-    {ok, Source} -> compile_file(Source, File);
+    {ok, Source} -> 
+      { Module, Bin, Generated } = compile_file(Source, File),
+
+      write_file(Module, Bin),
+      run(Generated),
+      trace_success_compilation();
     _ -> trace_file_read_error()
   end.
 
@@ -26,9 +33,7 @@ run(Generated) -> Generated:start().
 get_function(N, #chico_parser_env{functions=Functions} = _) ->
   lists:search(fun ({Name, _}) -> Name == N end, Functions).
 
-default_bootstrap(M) -> [
-  {attribute,1,module,list_to_atom(M)}, 
-  {attribute,1,export,[{start, 0}]}].
+default_bootstrap(M) -> [{attribute,1,module,list_to_atom(M)}].
 
 construct_form(M, C, #chico_parser_env{exported_functions=ExportedFunctions} = Env) -> 
   Exported = lists:map(
@@ -53,8 +58,5 @@ compile_file(Source, Filename) ->
   Forms = construct_form(Module, Translated, ParserEnv),
 
   { ok, Generated, Bin } = compile:forms(Forms),
-  
-  write_file(Module, Bin),
-  run(Generated),
 
-  trace_success_compilation().
+  { Module, Bin, Generated }.
