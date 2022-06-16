@@ -18,11 +18,14 @@ read_file(F) ->
 
   case file:read_file(File) of
     {ok, Source} -> 
-      { Module, Bin, Generated } = compile_file(Source, File),
-
-      write_file(Module, Bin),
-      run(Generated),
-      trace_success_compilation();
+      try compile_file(Source, File) of 
+        { Module, Bin, Generated }-> 
+          write_file(Module, Bin),
+          run(Generated),
+          trace_success_compilation();
+        _ -> error
+        catch _:_ -> error
+      end;
     _ -> trace_file_read_error()
   end.
 
@@ -50,13 +53,21 @@ compile_file(Source, Filename) ->
   Content = unicode:characters_to_list(Source),
 
   {ok, Tokens, _} = chico_tokenizer:string(Content),
-  {ok, Parsed } = chico_parser:parse(Tokens),
 
-  ParserEnv = chico_parser_env:check(Parsed),
-  Translated = chico_translate:translate(Parsed, ParserEnv),
+  case chico_parser:parse(Tokens) of 
+    {ok, Parsed } ->
+      ParserEnv = chico_parser_env:check(Parsed),
+      Translated = chico_translate:translate(Parsed, ParserEnv),
 
-  Forms = construct_form(Module, Translated, ParserEnv),
+      Forms = construct_form(Module, Translated, ParserEnv),
 
-  { ok, Generated, Bin } = compile:forms(Forms),
+      { ok, Generated, Bin } = compile:forms(Forms),
 
-  { Module, Bin, Generated }.
+      { Module, Bin, Generated };
+
+    {error, {{_, Line, _}, _, {internal, Message}}} ->
+      trace(error, Message ++ " at line "  ++ integer_to_list(Line));
+    
+    {error, _} ->
+      trace(error, "An unknown error happened")
+  end.

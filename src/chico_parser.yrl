@@ -65,6 +65,8 @@ call -> apply operation done : {apply, '$2'}.
 call -> apply declaration operation_values done : {apply, '$2', '$3'}.
 call -> apply declaration done : {apply, '$2', []}.
 
+call -> apply : return_error('$1', {internal, "The apply must be has parameters on right side"}).
+
 match_declaration -> match declaration with clause_declarations done : {'$1', '$2', '$4'}.
 
 clause_declaration -> guard open_function applications : {'$1', '$3'}.

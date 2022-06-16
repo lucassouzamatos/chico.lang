@@ -54,6 +54,7 @@ rewrite({{match, _, _}, Expr, Body}, E) ->
   [A] = rewrite(Expr, E),
   [{'case', 1, A, match(Body, E)}];
 
+rewrite({apply}, _) -> {error, "Syntax error: Maybe you forget the rest of application"};
 rewrite({apply, Body, Args}, E) -> [apply(Body, Args, E)];
 rewrite({apply, Body}, E) -> [apply(Body, E)];
 
