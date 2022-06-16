@@ -63,6 +63,9 @@ rewrite({integer, Line, Value}, _) ->
 rewrite({float, Line, Value}, _) ->
   [{float, Line, Value}];
 
+rewrite({string, Line, Value}, _) ->
+  [{string, Line, Value}];
+
 rewrite({export, _}, _) ->
   [];
 
