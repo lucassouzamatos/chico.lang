@@ -11,11 +11,16 @@ do(Source, Binding) ->
   case chico_parser:parse(Tokens) of 
     {ok, Parsed } -> 
       ParserEnv = chico_parser_env:check(Parsed),
-      Translated = chico_translate:translate(Parsed, ParserEnv),
 
-      NewBinding = eval(Translated, Binding),
-
-      do(io:get_line("chico>"), NewBinding);
+      try chico_type_checker:check(Parsed) of
+        _ ->
+          Translated = chico_translate:translate(Parsed, ParserEnv),
+          NewBinding = eval(Translated, Binding),
+          do(io:get_line("chico>"), NewBinding)
+      catch Error -> 
+        erlang:display({type_error, Error}),
+        do(io:get_line("chico>"), Binding)
+      end;
 
     {error, {{_, Line, _}, _, {internal, Message}}} ->
       trace(Message ++ " at line " ++ integer_to_list(Line)),
