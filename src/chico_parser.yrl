@@ -16,6 +16,7 @@ Nonterminals
   guard
   export_declaration
   module_function_call
+  pair
 .
 
 Terminals
@@ -36,11 +37,10 @@ Terminals
   export
   dot
   done
+  '#'
 .
 
-Rootsymbol
-  program
-.
+Rootsymbol program.
 
 program -> applications : '$1'.
 
@@ -54,6 +54,7 @@ application -> value done : '$1'.
 application -> call : '$1'.
 application -> match_declaration : '$1'.
 application -> export_declaration : '$1'.
+application -> pair : '$1'.
 
 export_declaration -> export declaration : {export, '$2'}.
 
@@ -74,6 +75,8 @@ clause_declaration -> guard open_function applications : {'$1', '$3'}.
 clause_declarations -> clause_declaration : ['$1'].
 clause_declarations -> clause_declaration clause_declarations : ['$1' | '$2'].
 
+pair -> '#' left_parenthesis value value right_parenthesis : {pair, {'$3', '$4'}}.
+
 guard -> left_parenthesis value right_parenthesis : {guard, '$2'}.
 guard -> left_parenthesis declaration right_parenthesis : {guard, '$2'}.
 
@@ -89,6 +92,7 @@ operation_values -> operation_value operation_values : ['$1' | '$2'].
 
 operation -> operator operation_value operation_value : {'$1', '$2', '$3'}.
 
+variable_declaration -> variable declaration assigment pair : {'$1', '$2', '$4'}.
 variable_declaration -> variable declaration assigment value : {'$1', '$2', '$4'}.
 variable_declaration -> variable declaration assigment call : {'$1', '$2', '$4'}.
 variable_declaration -> variable declaration assigment function_declaration : {'$1', '$2', '$4'}.

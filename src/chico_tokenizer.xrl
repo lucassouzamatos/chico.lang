@@ -11,8 +11,6 @@ D = \.
 
 Rules.
 {W}+ : skip_token.
-#(\\\^.|\\.|[^"])+# : skip_token.
-
 {D}    : {token, {dot, TokenLine, none}}.
 
 fun    : {token, {function, TokenLine, none}}.
@@ -23,7 +21,9 @@ done   : {token, {done, TokenLine, none}}.
 match  : {token, {match, TokenLine, none}}.
 with   : {token, {with, TokenLine, none}}.
 
-"(\\\^.|\\.|[^"])*" : {token, {string, TokenLine, get_string(TokenChars, TokenLen)}}.
+"(\\\^.|\\.|[^\"])*" : {token, {string, TokenLine, get_string(TokenChars, TokenLen)}}.
+
+\#     : {token, {'#', TokenLine, none}}.
 
 export : {token, {export, TokenLine, export}}.
 apply  : {token, {apply, TokenLine, apply}}.

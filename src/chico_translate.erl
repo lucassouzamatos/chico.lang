@@ -70,6 +70,18 @@ rewrite({string, Line, Value}, _) ->
 rewrite({export, _}, _) ->
   [];
 
+% Pair is a built in then should call the kernel source code
+% 
+% Example:
+% #(1 2) -> apply pair.make 1 2 done
+% 
+% TODO: Implements the kernel_call
+rewrite({pair, {Left, Right}}, E) ->
+  [{kernel_call, pair, rewrite(Left, E), rewrite(Right, E)}];
+
+rewrite({{variable, Line, _}, {_, _, Name}, {pair, PairArguments}}, E) ->
+  [Arguments] = rewrite({pair, PairArguments}, E),
+  [{match, Line, {var, Line, Name}, Arguments}];
 rewrite({{variable, Line, _}, {_, _, Name}, {apply, ApplyArgs}}, E) ->
   [Arguments] = rewrite({apply, ApplyArgs}, E),
   [{match, Line, {var, Line, Name}, Arguments}];
