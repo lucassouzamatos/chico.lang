@@ -79,6 +79,9 @@ rewrite({export, _}, _) ->
 rewrite({pair, {Left, Right}}, E) ->
   [{kernel_call, pair, rewrite(Left, E), rewrite(Right, E)}];
 
+rewrite({type_var_declaration, _, _, _}, E) ->
+  [];
+
 rewrite({{variable, Line, _}, {_, _, Name}, {pair, PairArguments}}, E) ->
   [Arguments] = rewrite({pair, PairArguments}, E),
   [{match, Line, {var, Line, Name}, Arguments}];

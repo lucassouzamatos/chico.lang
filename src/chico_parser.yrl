@@ -2,6 +2,8 @@ Nonterminals
   program
   application
   applications
+  type_application
+  type_applications
   operation
   variable_declaration
   operation_value
@@ -17,6 +19,7 @@ Nonterminals
   export_declaration
   module_function_call
   pair
+  type_variable_declaration
 .
 
 Terminals
@@ -38,11 +41,18 @@ Terminals
   dot
   done
   '#'
+  type_assigment
 .
 
 Rootsymbol program.
 
 program -> applications : '$1'.
+program -> type_applications : '$1'.
+
+type_applications -> type_application : ['$1'].
+type_applications -> type_application type_applications : ['$1' | '$2'].
+
+type_application -> type_variable_declaration : '$1'.
 
 applications -> application : ['$1'].
 applications -> application applications : ['$1' | '$2'].
@@ -96,6 +106,8 @@ variable_declaration -> variable declaration assigment pair : {'$1', '$2', '$4'}
 variable_declaration -> variable declaration assigment value : {'$1', '$2', '$4'}.
 variable_declaration -> variable declaration assigment call : {'$1', '$2', '$4'}.
 variable_declaration -> variable declaration assigment function_declaration : {'$1', '$2', '$4'}.
+
+type_variable_declaration -> variable declaration type_assigment declaration : {type_var_declaration, '$1', '$2', '$4'}.
 
 declarations -> declaration : ['$1'].
 declarations -> declaration declarations : ['$1' | '$2'].

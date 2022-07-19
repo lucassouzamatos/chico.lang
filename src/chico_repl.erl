@@ -9,7 +9,8 @@ do(Source, Binding) ->
   {ok, Tokens, _} = chico_tokenizer:string(Source),
 
   case chico_parser:parse(Tokens) of 
-    {ok, Parsed } -> 
+    {ok, Parsed } ->
+      erlang:display(Parsed),
       ParserEnv = chico_parser_env:check(Parsed),
 
       try chico_type_checker:check(Parsed) of
@@ -18,7 +19,6 @@ do(Source, Binding) ->
           NewBinding = eval(Translated, Binding),
           do(io:get_line("chico>"), NewBinding)
       catch Error -> 
-        erlang:display({type_error, Error}),
         do(io:get_line("chico>"), Binding)
       end;
 
@@ -26,12 +26,15 @@ do(Source, Binding) ->
       trace(Message ++ " at line " ++ integer_to_list(Line)),
       do(io:get_line("chico>"), Binding);
     
-    {error, _} ->
+    {error, E} ->
       trace("An unknown error happened"),
       do(io:get_line("chico>"), Binding)
   end.
 
 trace(V) -> erlang:display(V).
+
+eval([], Binding) ->
+  Binding;
 
 eval(Exprs, Binding) -> 
   {value, Value, NewBinding} = erl_eval:exprs(Exprs, Binding),

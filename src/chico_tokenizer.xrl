@@ -37,6 +37,7 @@ apply  : {token, {apply, TokenLine, apply}}.
 
 let    : {token, {variable, TokenLine, none}}.
 =      : {token, {assigment, TokenLine, none}}.
+::     : {token, {type_assigment, TokenLine, none}}.
 {A}+   : {token, {declaration, TokenLine, list_to_atom(TokenChars)}}.
 _      : {token, {declaration, TokenLine, '_'}}.
 
