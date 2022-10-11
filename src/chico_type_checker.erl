@@ -10,18 +10,21 @@
 
 empty_type_env() -> #chico_type_env{vars=[]}.
 
+warning_message(Message) -> erlang:display(Message).
+
 check([]) -> [];
-check([T]) -> [visit(T, empty_type_env())];
-check([T|Rest]) -> [visit(T, empty_type_env())] ++ check(Rest).
+check([T]) -> [infer(T, empty_type_env())];
+check([T|Rest]) -> [infer(T, empty_type_env())] ++ check(Rest).
 
 lookup(Name, #chico_type_env{vars=Vars} = _) ->
    lists:search(fun ({N}) -> Name == N end, Vars).
 
-visit({?is_var, Meta, _}, Env) ->
+infer({?is_var, Meta, _}, Env) ->
   {_, _, Name} = Meta,
 
   case lookup(Name, Env) of
     {_} -> ok;
-    _ -> throw("Type declaration for " ++ atom_to_list(Name) ++ " was not found")
+    _ -> warning_message("Type declaration for " ++ atom_to_list(Name) ++ " was not found")
   end;
-visit(_, _Env) -> ok.
+infer(_, _Env) -> ok.
+

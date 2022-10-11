@@ -10,7 +10,6 @@ do(Source, Binding) ->
 
   case chico_parser:parse(Tokens) of 
     {ok, Parsed } ->
-      erlang:display(Parsed),
       ParserEnv = chico_parser_env:check(Parsed),
 
       try chico_type_checker:check(Parsed) of
@@ -19,6 +18,7 @@ do(Source, Binding) ->
           NewBinding = eval(Translated, Binding),
           do(io:get_line("chico>"), NewBinding)
       catch Error -> 
+        trace(Error),
         do(io:get_line("chico>"), Binding)
       end;
 
@@ -26,7 +26,7 @@ do(Source, Binding) ->
       trace(Message ++ " at line " ++ integer_to_list(Line)),
       do(io:get_line("chico>"), Binding);
     
-    {error, E} ->
+    {error, _} ->
       trace("An unknown error happened"),
       do(io:get_line("chico>"), Binding)
   end.
