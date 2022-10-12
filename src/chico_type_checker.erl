@@ -41,6 +41,8 @@ infer(?is_float, _Env) ->
 infer(?is_string, _Env) -> 
   anotate(string);
 
+%% Infer applications
+%% Use constrain (args and result expected) about the function defined and unify with args received
 infer({apply, Body}, Env) ->
   [Expression | Args] = tuple_to_list(Body),
 
@@ -50,11 +52,17 @@ infer({apply, Body}, Env) ->
   % Arguments type
   TArgs = [infer(Arg, Env) || Arg <- Args],
 
-  [unify(TArg, lists:nth(Index, Input)) || {Index, TArg} <- lists:enumerate(TArgs)],
-
+  unify_apply_args(Input, TArgs),
   anotate(call, TArgs, Output);
 
 infer(_, _Env) -> not_found_type.
+
+
+get_arg_expected_from_constrain(Index, Constrain) -> lists:nth(Index, Constrain).
+
+%% Receive input constrain with expected args and the args from apply then unify it
+unify_apply_args(InputConstrain, TArgs) ->
+  [unify(TArg, get_arg_expected_from_constrain(Index, InputConstrain)) || {Index, TArg} <- lists:enumerate(TArgs)].
 
 do_constrain_fn(?is_operator, _Env) ->
   % Constrain with args and result type
