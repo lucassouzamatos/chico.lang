@@ -7,6 +7,10 @@
 }).
 
 -define(is_var, {variable, _, _}).
+-define(is_integer, {integer, _, _}).
+-define(is_float, {float, _, _}).
+-define(is_apply, {apply, _}).
+-define(is_operator, {operator, _, _}).
 
 empty_type_env() -> #chico_type_env{vars=[]}.
 
@@ -19,12 +23,24 @@ check([T|Rest]) -> [infer(T, empty_type_env())] ++ check(Rest).
 lookup(Name, #chico_type_env{vars=Vars} = _) ->
    lists:search(fun ({N}) -> Name == N end, Vars).
 
-infer({?is_var, Meta, _}, Env) ->
-  {_, _, Name} = Meta,
+anotate(Value) -> {type, Value}.
 
-  case lookup(Name, Env) of
-    {_} -> ok;
-    _ -> warning_message("Type declaration for " ++ atom_to_list(Name) ++ " was not found")
-  end;
+infer({?is_var, _, Value}, Env) -> 
+  infer(Value, Env);
+infer(?is_integer, _Env) -> 
+  anotate(number);
+infer(?is_float, _Env) -> 
+  anotate(number);
+infer(?is_operator, _Env) ->
+  % Constrain with args and result type
+  {constrain, [anotate(number), anotate(number)], anotate(number)};
+infer({apply, Body}, Env) ->
+  [Expression | Args] = tuple_to_list(Body),
+
+  % Expression called
+  Ec = infer(Expression, Env),
+   
+  % Arguments type
+  At = [infer(Arg, Env) || Arg <- Args];
 infer(_, _Env) -> ok.
 
