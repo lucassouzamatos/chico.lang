@@ -2,3 +2,7 @@
   functions = [],
   exported_functions = []
 }).
+
+-record(chico_type_env, {
+  vars = []
+}).

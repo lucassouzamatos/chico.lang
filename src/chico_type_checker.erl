@@ -1,10 +1,8 @@
 -module(chico_type_checker).
 
--export([check/1]).
+-include("chico.hrl").
 
--record(chico_type_env, {
-  vars = []
-}).
+-export([check/2]).
 
 -define(is_var, {variable, _, _}).
 -define(is_integer, {integer, _, _}).
@@ -13,16 +11,27 @@
 -define(is_apply, {apply, _}).
 -define(is_operator, {operator, _, _}).
 
-empty_type_env() -> #chico_type_env{vars=[]}.
-
 warning_message(Message) -> throw(Message).
 
-check([]) -> [];
-check([T]) -> [infer(T, empty_type_env())];
-check([T|Rest]) -> [infer(T, empty_type_env())] ++ check(Rest).
+check([T], Env) ->
+  Infered = infer(T, Env),
+  Type = get_type(Infered),
+  NewEnv = get_env(Infered),
+  {[Type], NewEnv};
+check([T|Rest], Env) -> 
+  {Result, NewEnv} = check([T], Env),
+  {RestResult, RestNewEnv} = check(Rest, NewEnv),
+  {Result ++ RestResult, RestNewEnv}.
 
-lookup(Name, #chico_type_env{vars=Vars} = _) ->
-   lists:search(fun ({N}) -> Name == N end, Vars).
+get_type({Type, _}) -> Type.
+get_env({_, Env}) -> Env.
+
+lookup_var(Name, #chico_type_env{vars=Vars} = _) ->
+  lists:search(fun ({N, _}) -> Name == N end, Vars).
+
+add_var_to_env(Name, Type, #chico_type_env{vars=Vars} = Env) ->
+  N = Vars ++ [{Name, Type}],
+  Env#chico_type_env{vars=N}.
 
 anotate(Value) -> {type, Value}.
 anotate(Value, Args, Output) -> {type, Value, Args, Output}.
@@ -32,14 +41,19 @@ unify({type, Ta}, {type, Tb}) when Ta =/= Tb ->
   warning_message("Type " ++ atom_to_list(Ta) ++ " mismatch to type " ++ atom_to_list(Tb)),
   not_matched_type.
 
-infer({?is_var, _, Value}, Env) -> 
-  infer(Value, Env);
-infer(?is_integer, _Env) -> 
-  anotate(number);
-infer(?is_float, _Env) -> 
-  anotate(number);
-infer(?is_string, _Env) -> 
-  anotate(string);
+infer({?is_var, {_, _, Name}, Value}, Env) -> 
+  Infered = infer(Value, Env),
+  Type = get_type(Infered),
+  {Type, add_var_to_env(Name, Type, Env)};
+infer(?is_integer, Env) -> 
+  {anotate(number), Env};
+infer(?is_float, Env) -> 
+  {anotate(number), Env};
+infer(?is_string, Env) -> 
+  {anotate(string), Env};
+infer({declaration, _, Name}, Env) ->
+  {value, {_, Type}} = lookup_var(Name, Env),
+  {Type, Env};
 
 %% Infer applications
 %% Use constrain (args and result expected) about the function defined and unify with args received
@@ -50,13 +64,12 @@ infer({apply, Body}, Env) ->
   {constrain, Input, Output} = do_constrain_fn(Expression, Env),
    
   % Arguments type
-  TArgs = [infer(Arg, Env) || Arg <- Args],
+  TArgs = [get_type(Infered) || Infered <- [infer(Arg, Env) || Arg <- Args]],
 
   unify_apply_args(Input, TArgs),
-  anotate(call, TArgs, Output);
+  {anotate(call, TArgs, Output), Env};
 
-infer(_, _Env) -> not_found_type.
-
+infer(_, Env) -> {not_found_type, Env}.
 
 get_arg_expected_from_constrain(Index, Constrain) -> lists:nth(Index, Constrain).
 
