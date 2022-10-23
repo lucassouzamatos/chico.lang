@@ -1,6 +1,6 @@
 ## Chico.lang
 
-This is a _toy_ functional language. You can't use in production _yet_.
+This is a _toy_ functional language. **It is only an experiment. You can't use in production _yet_**.
 
 ## Overview
 Using the shell, you can do basic operations, like this:
