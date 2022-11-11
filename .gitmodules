@@ -1,3 +1,6 @@
 [submodule "bytecode"]
 	path = bytecode
 	url = https://github.com/lucassouzamatos/chico.bytecode.git
+[submodule "docs"]
+	path = docs
+	url = https://github.com/lucassouzamatos/chico.docs.git
