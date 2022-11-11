@@ -1,0 +1,3 @@
+[submodule "bytecode"]
+	path = bytecode
+	url = https://github.com/lucassouzamatos/chico.bytecode.git
