@@ -11,6 +11,7 @@ Nonterminals
   value
   function_declaration
   tuple_declaration
+  list_declaration
   declarations
   call
   match_declaration
@@ -42,6 +43,8 @@ Terminals
   type_assigment
   '{'
   '}'
+  '['
+  ']'
 .
 
 Rootsymbol program.
@@ -58,6 +61,7 @@ applications -> application : ['$1'].
 applications -> application applications : ['$1' | '$2'].
 
 application -> tuple_declaration : '$1'.
+application -> list_declaration : '$1'.
 application -> function_declaration : '$1'.
 application -> variable_declaration : '$1'.
 application -> declaration done : '$1'.
@@ -100,6 +104,7 @@ variable_declaration -> variable declaration assigment value : {'$1', '$2', '$4'
 variable_declaration -> variable declaration assigment call : {'$1', '$2', '$4'}.
 variable_declaration -> variable declaration assigment function_declaration : {'$1', '$2', '$4'}.
 variable_declaration -> variable declaration assigment tuple_declaration : {'$1', '$2', '$4'}.
+variable_declaration -> variable declaration assigment list_declaration : {'$1', '$2', '$4'}.
 
 type_variable_declaration -> variable declaration type_assigment declaration : {type_var_declaration, '$1', '$2', '$4'}.
 
@@ -134,9 +139,8 @@ function_declaration ->
   applications
   done : {'$1', '$2', [], '$6'}.
   
-tuple_declaration ->
-  '{'
-  operation_values
-  '}' : {tuple, '$2'}.
+tuple_declaration -> '{' operation_values '}' : {tuple, '$2'}.
+
+list_declaration -> '[' operation_values ']' : {list, '$2'}.
 
 Erlang code.

@@ -26,6 +26,8 @@ with   : {token, {with, TokenLine, none}}.
 \#     : {token, {'#', TokenLine, none}}.
 \{     : {token, {'{', TokenLine, none}}.
 \}     : {token, {'}', TokenLine, none}}.
+\[     : {token, {'[', TokenLine, none}}.
+\]     : {token, {']', TokenLine, none}}.
 
 export : {token, {export, TokenLine, export}}.
 apply  : {token, {apply, TokenLine, apply}}.

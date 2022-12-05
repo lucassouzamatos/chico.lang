@@ -97,6 +97,9 @@ rewrite({{variable, Line, _}, {_, _, Name}, {{function, Line, FName}, Arguments,
 rewrite({{variable, Line, _}, {declaration, _, Name}, {tuple, Body}}, E) ->
   [Tuple] = rewrite({tuple, Body}, E),
   [{match, Line, {var, Line, Name}, Tuple}];
+rewrite({{variable, Line, _}, {declaration, _, Name}, {list, Body}}, E) ->
+  [First | Rest] = Body,
+  [{match, Line, {var, Line, Name}, cons({cons, Line, First}, Rest, E)}];
 rewrite({{variable, Line, _}, {_, _, Name}, R}, _) ->
   [{match, Line, {var, Line, Name}, R}];
 
@@ -116,11 +119,18 @@ rewrite({tuple, Body}, E) -> [{tuple, 1, translate(Body, E)}];
 rewrite({{function, Line, _}, Arguments, Body}, E) ->
   [{'fun', Line, anon_function(Line, Arguments, Body, E)}];
 rewrite({{function, Line, _}, {_, _, Name}, Arguments, Body}, E) ->
-  [{function, Line, Name, 
-      length(Arguments), 
+  [{function, Line, Name,
+      length(Arguments),
       [{clause, Line, translate(Arguments, E), [], translate(Body, E)}]}].
 
 unwrap_hand_side({Type, Line, Value}) when Type == declaration -> 
   {var,Line,Value};
 unwrap_hand_side({Type, Line, Value}) ->
   {Type, Line, Value}.
+
+cons({cons, Line, _}, [Next], Env) ->
+  [Item] = rewrite(Next, Env),
+  {cons, Line, Item, {nil, 1}};
+cons({cons, Line, Body}, [Next | NewRest], Env) ->
+  [Item] = rewrite(Body, Env),
+  {cons, Line, Item, cons({cons, Line, Next}, NewRest, Env)}.
