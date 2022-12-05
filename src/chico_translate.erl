@@ -94,6 +94,9 @@ rewrite({{variable, Line, _}, {_, _, Name}, {apply, ApplyArgs, ApplyArgs1}}, E) 
 rewrite({{variable, Line, _}, {_, _, Name}, {{function, Line, FName}, Arguments, Body}}, E) ->
   [FArguments] = rewrite({{function, Line, FName}, Arguments, Body}, E),
   [{match, Line, {var, Line, Name}, FArguments}];
+rewrite({{variable, Line, _}, {declaration, _, Name}, {tuple, Body}}, E) ->
+  [Tuple] = rewrite({tuple, Body}, E),
+  [{match, Line, {var, Line, Name}, Tuple}];
 rewrite({{variable, Line, _}, {_, _, Name}, R}, _) ->
   [{match, Line, {var, Line, Name}, R}];
 
@@ -107,6 +110,8 @@ rewrite({declaration, Line, Name}, Env) ->
     false -> [{var, Line, Name}];
     _ -> [{atom, Line, Name}]
   end;
+
+rewrite({tuple, Body}, E) -> [{tuple, 1, translate(Body, E)}];
 
 rewrite({{function, Line, _}, Arguments, Body}, E) ->
   [{'fun', Line, anon_function(Line, Arguments, Body, E)}];
