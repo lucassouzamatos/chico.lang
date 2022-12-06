@@ -13,9 +13,9 @@ operation(Operation, {L, R}) ->
   {Operation, unwrap_hand_side(L), unwrap_hand_side(R)}.
 
 apply({module_function_call, {declaration, Line, DeclModule}, {declaration, _, DeclFun}}, _) ->
-  {call, Line, {remote, Line, {atom, Line, DeclModule}, {atom, Line, DeclFun}}, []};
+  {call, Line, {remote, Line, atom({atom, Line, DeclModule}), atom({atom, Line, DeclFun})}, []};
 apply({module_function_call, {declaration, Line, DeclModule}, {declaration, _, DeclFun}, Body}, Env) ->
-  {call, Line, {remote, Line, {atom, Line, DeclModule}, {atom, Line, DeclFun}}, translate(Body, Env)};
+  {call, Line, {remote, Line, atom({atom, Line, DeclModule}), atom({atom, Line, DeclFun})}, translate(Body, Env)};
 apply(Body, _) -> 
   case Body of 
     {{operator, Line, Operation}, L, R} -> 
@@ -68,10 +68,7 @@ rewrite({string, Line, Value}, _) ->
   [{string, Line, Value}];
 
 rewrite({atom, Line, Value}, _) ->
-  [{atom, Line, Value}];
-
-rewrite({atom, {declaration, Line, Value}}, _) ->
-  [{atom, Line, Value}];
+  atom({atom, Line, Value});
 
 rewrite({export, _}, _) ->
   [];
@@ -105,6 +102,8 @@ rewrite({{variable, Line, _}, {declaration, _, Name}, {tuple, Body}}, E) ->
   [{match, Line, {var, Line, Name}, Tuple}];
 rewrite({{variable, Line, _}, {declaration, _, Name}, {list, Body}}, E) ->
   [{match, Line, {var, Line, Name}, cons(Body, Line, E)}];
+rewrite({{variable, Line, _}, {_, _, Name}, {atom, _} = Atom}, _) ->
+  [{match, Line, {var, Line, Name}, atom(Atom)}];
 rewrite({{variable, Line, _}, {_, _, Name}, R}, _) ->
   [{match, Line, {var, Line, Name}, R}];
 
@@ -116,7 +115,7 @@ rewrite({declaration, Line, Name}, Env) ->
   
   case IsFun of
     false -> [{var, Line, Name}];
-    _ -> [{atom, Line, Name}]
+    _ -> [atom({atom, Line, Name})]
   end;
 
 rewrite({tuple, Body}, E) -> [{tuple, 1, translate(Body, E)}];
@@ -138,3 +137,9 @@ cons([], _Line, _Env) ->
 cons([Next | Rest], Line, Env) ->
   [Item] = rewrite(Next, Env),
   {cons, Line, Item, cons(Rest, Line, Env)}.
+
+atom({atom, {declaration, Line, Value}}) ->
+  {atom, Line, Value};
+
+atom({atom, Line, Value}) ->
+  {atom, Line, Value}.
