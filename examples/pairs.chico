@@ -4,8 +4,8 @@ fun start () ->
   let H = apply pair.head P done
   let T = apply pair.tail P done
 
-  apply erlang.display H done
-  apply erlang.display T done
+  apply ~erlang.display H done
+  apply ~erlang.display T done
 done
 
 export start

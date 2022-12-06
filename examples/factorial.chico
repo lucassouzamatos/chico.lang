@@ -18,7 +18,7 @@ done
 
 fun start () ->
   let result = apply factorial 4 done
-  apply erlang.display result done
+  apply ~erlang.display result done
 done
 
 export start
