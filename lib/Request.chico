@@ -1,0 +1,23 @@
+fun bootstrap () ->
+  apply ~inets.start done
+done
+
+fun fetch (Link) ->
+  apply bootstrap done
+
+  let Empty = []
+  
+  let Options = { Link Empty }
+
+  let Method = ~a get
+
+  apply 
+    ~httpc.request
+    Method
+    Options
+    Empty
+    Empty
+  done
+done
+
+export fetch

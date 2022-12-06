@@ -3,7 +3,7 @@
 Definitions.
 U = [A-Z]
 L = [a-z]
-A = ({U}|{L}|_|@|~)
+A = ({U}|{L}|_|@)
 F = (\+|-)?[0-9]+\.[0-9]+
 I = (\+|-)?[0-9]*
 W = [\s\t\n\r] 
@@ -29,6 +29,8 @@ with   : {token, {with, TokenLine, none}}.
 \}     : {token, {'}', TokenLine, none}}.
 \[     : {token, {'[', TokenLine, none}}.
 \]     : {token, {']', TokenLine, none}}.
+\~     : {token, {'~', TokenLine, none}}.
+\~a    : {token, {'~a', TokenLine, none}}.
 
 export : {token, {export, TokenLine, export}}.
 apply  : {token, {apply, TokenLine, apply}}.

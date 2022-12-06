@@ -46,6 +46,8 @@ Terminals
   '}'
   '['
   ']'
+  '~'
+  '~a'
 .
 
 Rootsymbol program.
@@ -76,6 +78,7 @@ export_declaration -> export declaration : {export, '$2'}.
 module_function_call -> declaration dot declaration :  {module_function_call, '$1', '$3', []}.
 module_function_call -> declaration dot declaration operation_values :  {module_function_call, '$1', '$3', '$4'}.
 
+call -> apply '~' module_function_call done : {apply, '$3'}.
 call -> apply module_function_call done : {apply, '$2'}.
 call -> apply operation done : {apply, '$2'}.
 call -> apply declaration operation_values done : {apply, '$2', '$3'}.
@@ -93,6 +96,7 @@ value -> float : '$1'.
 value -> integer : '$1'.
 value -> string : '$1'.
 value -> atom : '$1'.
+value -> '~a' declaration : {atom, '$2'}.
 
 operation_value -> declaration : '$1'.
 operation_value -> value : '$1'.

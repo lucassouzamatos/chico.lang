@@ -1,0 +1,9 @@
+fun start () ->
+  let Link = "https://raw.githubusercontent.com/lucassouzamatos/lucassouzamatos/main/README.md"
+  
+  apply 
+    Request.fetch Link 
+  done
+done
+
+export start

@@ -70,6 +70,9 @@ rewrite({string, Line, Value}, _) ->
 rewrite({atom, Line, Value}, _) ->
   [{atom, Line, Value}];
 
+rewrite({atom, {declaration, Line, Value}}, _) ->
+  [{atom, Line, Value}];
+
 rewrite({export, _}, _) ->
   [];
 
