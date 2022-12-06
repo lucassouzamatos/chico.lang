@@ -12,7 +12,7 @@ fun factorial (V) ->
     done
   done
 
-  let bind = apply recur.wrap builder done
+  let bind = apply Recursive.wrap builder done
   apply bind V done
 done
 

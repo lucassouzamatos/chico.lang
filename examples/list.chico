@@ -21,7 +21,7 @@ fun reverse (List Callback) ->
     done
   done
 
-  let bind = apply recur.wrap iterate done
+  let bind = apply Recursive.wrap iterate done
 
   apply bind List done
 done
