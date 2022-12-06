@@ -3,7 +3,7 @@
 Definitions.
 U = [A-Z]
 L = [a-z]
-A = ({U}|{L})
+A = ({U}|{L}|_|@|~)
 F = (\+|-)?[0-9]+\.[0-9]+
 I = (\+|-)?[0-9]*
 W = [\s\t\n\r] 
@@ -21,7 +21,8 @@ done   : {token, {done, TokenLine, none}}.
 match  : {token, {match, TokenLine, none}}.
 with   : {token, {with, TokenLine, none}}.
 
-"(\\\^.|\\.|[^\"])*" : {token, {string, TokenLine, get_string(TokenChars, TokenLen)}}.
+"(\\\^.|\\.|[^\"])*" : {token, {string, TokenLine, atom_to_list(get_string(TokenChars, TokenLen))}}.
+'(\\\^.|\\.|[^\"])*' : {token, {atom, TokenLine, get_string(TokenChars, TokenLen)}}.
 
 \#     : {token, {'#', TokenLine, none}}.
 \{     : {token, {'{', TokenLine, none}}.

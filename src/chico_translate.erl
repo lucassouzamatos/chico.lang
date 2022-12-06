@@ -67,6 +67,9 @@ rewrite({float, Line, Value}, _) ->
 rewrite({string, Line, Value}, _) ->
   [{string, Line, Value}];
 
+rewrite({atom, Line, Value}, _) ->
+  [{atom, Line, Value}];
+
 rewrite({export, _}, _) ->
   [];
 
@@ -98,8 +101,7 @@ rewrite({{variable, Line, _}, {declaration, _, Name}, {tuple, Body}}, E) ->
   [Tuple] = rewrite({tuple, Body}, E),
   [{match, Line, {var, Line, Name}, Tuple}];
 rewrite({{variable, Line, _}, {declaration, _, Name}, {list, Body}}, E) ->
-  [First | Rest] = Body,
-  [{match, Line, {var, Line, Name}, cons({cons, Line, First}, Rest, E)}];
+  [{match, Line, {var, Line, Name}, cons(Body, Line, E)}];
 rewrite({{variable, Line, _}, {_, _, Name}, R}, _) ->
   [{match, Line, {var, Line, Name}, R}];
 
@@ -128,9 +130,8 @@ unwrap_hand_side({Type, Line, Value}) when Type == declaration ->
 unwrap_hand_side({Type, Line, Value}) ->
   {Type, Line, Value}.
 
-cons({cons, Line, _}, [Next], Env) ->
+cons([], _Line, _Env) ->
+  {nil, 1};
+cons([Next | Rest], Line, Env) ->
   [Item] = rewrite(Next, Env),
-  {cons, Line, Item, {nil, 1}};
-cons({cons, Line, Body}, [Next | NewRest], Env) ->
-  [Item] = rewrite(Body, Env),
-  {cons, Line, Item, cons({cons, Line, Next}, NewRest, Env)}.
+  {cons, Line, Item, cons(Rest, Line, Env)}.

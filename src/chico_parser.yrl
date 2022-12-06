@@ -35,6 +35,7 @@ Terminals
   right_parenthesis
   open_function
   string
+  atom
   match
   with
   export
@@ -91,6 +92,7 @@ clause_declarations -> clause_declaration clause_declarations : ['$1' | '$2'].
 value -> float : '$1'.
 value -> integer : '$1'.
 value -> string : '$1'.
+value -> atom : '$1'.
 
 operation_value -> declaration : '$1'.
 operation_value -> value : '$1'.
@@ -142,5 +144,6 @@ function_declaration ->
 tuple_declaration -> '{' operation_values '}' : {tuple, '$2'}.
 
 list_declaration -> '[' operation_values ']' : {list, '$2'}.
+list_declaration -> '[' ']' : {list, []}.
 
 Erlang code.
