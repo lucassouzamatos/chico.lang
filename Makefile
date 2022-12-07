@@ -1,4 +1,4 @@
-all: compile bootstrap test
+all: format compile bootstrap test
 
 compile: clean
 	mkdir ebin
@@ -16,6 +16,9 @@ bootstrap:
 
 test: compile
 	sudo ./app_test
+
+format:
+	rebar3 steamroll
 
 uninstall: 
 	sudo rm -rf /usr/chicolang
