@@ -1,0 +1,6 @@
+#!/usr/bin/env escript
+%% -*- erlang -*-
+%%! -pa ebin -Wall
+
+main([]) -> 
+  chico_tokenizer_test:test().

@@ -1,4 +1,4 @@
-all: compile bootstrap
+all: compile bootstrap test
 
 compile: clean
 	mkdir ebin
@@ -13,6 +13,9 @@ install: uninstall compile
 
 bootstrap:
 	sudo ./app --install
+
+test: compile
+	sudo ./app_test
 
 uninstall: 
 	sudo rm -rf /usr/chicolang
