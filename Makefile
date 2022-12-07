@@ -1,4 +1,4 @@
-all: compile
+all: compile bootstrap
 
 compile: clean
 	mkdir ebin
@@ -6,10 +6,13 @@ compile: clean
 
 install: uninstall compile
 	sudo mkdir -p /usr/chicolang
-	sudo cp -r ebin /usr/chicolang/bin
+	sudo cp -r ebin /usr/chicolang/ebin
 	sudo cp app /usr/bin/chico
 
 	sudo chico --install
+
+bootstrap:
+	sudo ./app --install
 
 uninstall: 
 	sudo rm -rf /usr/chicolang

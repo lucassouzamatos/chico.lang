@@ -18,14 +18,15 @@ read_file(F) ->
 
   case file:read_file(File) of
     {ok, Source} -> 
-      try compile_file(Source, File) of 
-        { Module, Bin, Generated } ->
+      % try compile_file(Source, File) of 
+        { Module, Bin, Generated } = compile_file(Source, File),
           write_file(Module, Bin),
           run(Generated),
           trace_success_compilation();
-        _ -> error
-        catch _:_ -> error
-      end;
+      %   _ -> error
+      %   catch _:_ -> error
+      % end
+      % ;
     _ -> trace_file_read_error()
   end.
 
@@ -57,7 +58,7 @@ compile_file(Source, Filename) ->
   case chico_parser:parse(Tokens) of 
     {ok, Parsed } ->
       ParserEnv = chico_parser_env:check(Parsed),
-      Translated = chico_translate:translate(Parsed, ParserEnv),
+      Translated = chico_codegen:translate(Parsed, ParserEnv),
 
       Forms = construct_form(Module, Translated, ParserEnv),
 

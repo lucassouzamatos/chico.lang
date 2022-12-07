@@ -1,4 +1,4 @@
--module(chico_translate).
+-module(chico_codegen).
 -export([translate/2]).
 
 -compile({no_auto_import,[apply/2]}).

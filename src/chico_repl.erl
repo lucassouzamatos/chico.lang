@@ -7,14 +7,13 @@ execute() ->
 do(Source, _Binding, _TypingEnv) when Source == "exit\n" -> erlang:display(exited);
 do(Source, Binding, TypingEnv) ->
   {ok, Tokens, _} = chico_tokenizer:string(Source),
-
   case chico_parser:parse(Tokens) of 
     {ok, Parsed } ->
       ParserEnv = chico_parser_env:check(Parsed),
 
       try chico_type_checker:check(Parsed, TypingEnv) of
         {_TypingAST, NewTypingEnv} ->
-          Translated = chico_translate:translate(Parsed, ParserEnv),
+          Translated = chico_codegen:translate(Parsed, ParserEnv),
           NewBinding = eval(Translated, Binding),
           do(io:get_line("chico>"), NewBinding, NewTypingEnv)
       catch Error -> 
@@ -40,4 +39,5 @@ eval(Exprs, Binding) ->
   {value, Value, NewBinding} = erl_eval:exprs(Exprs, Binding),
   trace(Value),
   NewBinding.
+
 
