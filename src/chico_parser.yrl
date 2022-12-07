@@ -98,6 +98,8 @@ value -> string : '$1'.
 value -> atom : '$1'.
 value -> '~a' declaration : {atom, '$2'}.
 
+operation_value -> list_declaration : '$1'.
+operation_value -> tuple_declaration : '$1'.
 operation_value -> declaration : '$1'.
 operation_value -> value : '$1'.
 

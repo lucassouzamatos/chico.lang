@@ -3,4 +3,6 @@
 %%! -pa ebin -Wall
 
 main([]) -> 
-  chico_tokenizer_test:test().
+  chico_tokenizer_test:test(),
+  chico_parser_test:test(),
+  chico_codegen_test:test().
