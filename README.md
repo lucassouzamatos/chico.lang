@@ -1,4 +1,4 @@
-## Chico.lang
+<img src="https://user-images.githubusercontent.com/20645254/214142416-8dda0f29-e283-4347-9468-d48516725c7a.png"  width="500" height="auto">
 
 This is a _toy_ functional language. **It is only an experiment. You can't use in production _yet_**.
 
