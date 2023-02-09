@@ -1,0 +1,13 @@
+fun print (V) ->
+  let Integer = apply ~erlang.is_integer V done
+
+  match Integer with
+    (true) -> 
+      let New = apply ~erlang.integer_to_list V done
+      apply ~io.put_chars New done
+    (_) ->
+      apply ~io.put_chars V done
+	done
+done
+
+export print

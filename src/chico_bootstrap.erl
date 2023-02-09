@@ -2,7 +2,8 @@
 
 -export([start/0]).
 
-start() -> [compile_lib_file(Name) || Name <- ["lib/Recursive.chico", "lib/Request.chico"]].
+start() ->
+  [compile_lib_file(Name) || Name <- ["lib/Recursive.chico", "lib/Request.chico", "lib/Std.chico"]].
 
 compile_lib_file(Filename) ->
   {ok, Cwd} = file:get_cwd(),
