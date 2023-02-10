@@ -115,6 +115,7 @@ rewrite({declaration, Line, Name}, Env) ->
   end;
 
 rewrite({tuple, Body}, E) -> [{tuple, 1, translate(Body, E)}];
+rewrite({public, Rest}, E) -> rewrite(Rest, E);
 
 rewrite({{function, Line, _}, Arguments, Body}, E) ->
   [{'fun', Line, anon_function(Line, Arguments, Body, E)}];

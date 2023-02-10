@@ -10,6 +10,7 @@ Nonterminals
   operation_values
   value
   function_declaration
+	public_function_declaration
   tuple_declaration
   list_declaration
   declarations
@@ -42,6 +43,7 @@ Terminals
   dot
   done
   type_assigment
+	public
   '{'
   '}'
   '['
@@ -66,6 +68,7 @@ applications -> application applications : ['$1' | '$2'].
 application -> tuple_declaration : '$1'.
 application -> list_declaration : '$1'.
 application -> function_declaration : '$1'.
+application -> public_function_declaration : '$1'.
 application -> variable_declaration : '$1'.
 application -> declaration done : '$1'.
 application -> value done : '$1'.
@@ -118,6 +121,8 @@ type_variable_declaration -> variable declaration type_assigment declaration : {
 
 declarations -> declaration : ['$1'].
 declarations -> declaration declarations : ['$1' | '$2'].
+
+public_function_declaration -> public function_declaration : {'public', '$2'}.
 
 function_declaration -> 
   function 

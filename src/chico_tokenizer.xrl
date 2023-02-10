@@ -13,6 +13,7 @@ Rules.
 {W}+ : skip_token.
 {D}    : {token, {dot, TokenLine, none}}.
 
+pub    : {token, {public, TokenLine, none}}.
 fun    : {token, {function, TokenLine, none}}.
 \(     : {token, {left_parenthesis, TokenLine, none}}.
 \)     : {token, {right_parenthesis, TokenLine, none}}.
@@ -39,13 +40,15 @@ apply  : {token, {apply, TokenLine, apply}}.
 \/     : {token, {operator, TokenLine, '/'}}.
 \*     : {token, {operator, TokenLine, '*'}}.
 
-{I}    : {token, {integer, TokenLine, list_to_integer(TokenChars)}}.
-{F}    : {token, {float, TokenLine, list_to_float(TokenChars)}}.
 
 let    : {token, {variable, TokenLine, none}}.
 =      : {token, {assigment, TokenLine, none}}.
 ::     : {token, {type_assigment, TokenLine, none}}.
 {A}+   : {token, {declaration, TokenLine, list_to_atom(TokenChars)}}.
+
+{I}    : {token, {integer, TokenLine, list_to_integer(TokenChars)}}.
+{F}    : {token, {float, TokenLine, list_to_float(TokenChars)}}.
+
 _      : {token, {declaration, TokenLine, '_'}}.
 
 Erlang code.

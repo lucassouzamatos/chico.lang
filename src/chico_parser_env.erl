@@ -26,4 +26,10 @@ check({export, {_, _, Name}}, #chico_parser_env{exported_functions = EFunctions}
   N = EFunctions ++ [Name],
   Env#chico_parser_env{exported_functions = N};
 
+check({public, FunctionDecl}, #chico_parser_env{exported_functions = EFunctions} = Env) ->
+  {_, {_, _, Name}, _, _} = FunctionDecl,
+  N = EFunctions ++ [Name],
+  NewEnv = Env#chico_parser_env{exported_functions = N},
+  check(FunctionDecl, NewEnv);
+
 check(_, #chico_parser_env{} = Env) -> Env.

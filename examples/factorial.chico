@@ -9,9 +9,9 @@ fun factorial (N) ->
   done
 done
 
-fun start () ->
+pub fun start () ->
   let result = apply factorial 7 done
   apply Std.print result done
 done
 
-export start
+
