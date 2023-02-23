@@ -1,31 +1,41 @@
-pub fun get_port (value) ->
+fun get_port (value) ->
   match value with
     { ~a ok port } -> port done
     (_) -> 1 done
   done
 done
 
-pub fun get_listen_port () ->
+fun get_listen_port (port) ->
   let b = ~a binary
   let packet = { ~a packet 0 }
   let active = { ~a active ~a false }
 
   let options = [b packet active]
 
-  let socket = apply ~gen_tcp.listen 4444 options done
+  let socket = apply ~gen_tcp.listen port options done
   apply get_port socket done
 done
 
-pub fun get_accept_port (listen_port) ->
+fun get_accept_port (listen_port) ->
   let socket = apply ~gen_tcp.accept listen_port done
   apply get_port socket done
 done
 
-pub fun serve () ->
-  let listen_port = apply get_listen_port done
-  let accept_port = apply get_accept_port listen_port done
+fun trace (port) ->
+  let port_info = apply ~erlang.integer_to_list port done
+  let message = apply ~string.concat "server listening on port " port_info done
 
-  apply ~erlang.display accept_port done
+  apply ~erlang.display message done
+done
+
+pub fun serve () ->
+  let port = 4444
+
+  let listen_port = apply get_listen_port port done
+  
+  apply trace port done
+
+  apply get_accept_port listen_port done
 done
 
 pub fun start () ->
