@@ -1,17 +1,24 @@
 pub fun get_port (value) ->
   match value with
-    ({ ~a ok port }) -> port done
+    { ~a ok port } -> port done
     (_) -> 1 done
   done
 done
 
 pub fun listen () ->
   let b = ~a binary
-  let options = [b]
-  let listening = apply ~gen_tcp.listen 4444 options done
+  let packet = { ~a packet 0 }
+  let active = { ~a active ~a false }
+
+  let options = [b packet active]
   
-  let ttt = apply get_port listening done
-  apply ~erlang.display ttt done
+  let lsocket_z = apply ~gen_tcp.listen 4444 options done
+  let lsocket_y = apply get_port lsocket_z done
+  
+  let socket_z = apply ~gen_tcp.accept lsocket_y done
+  let socket_y = apply get_port socket_z done
+
+  apply ~erlang.display socket_y done
 done
 
 pub fun start () ->
