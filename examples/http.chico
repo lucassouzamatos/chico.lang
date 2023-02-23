@@ -1,4 +1,4 @@
-pub fun get (value) ->
+pub fun get_port (value) ->
   match value with
     ({ ~a ok port }) -> port done
     (_) -> 1 done
@@ -10,8 +10,8 @@ pub fun listen () ->
   let options = [b]
   let listening = apply ~gen_tcp.listen 4444 options done
   
-  let ttt = apply get listening done
-  apply ~erlang.display listening done
+  let ttt = apply get_port listening done
+  apply ~erlang.display ttt done
 done
 
 pub fun start () ->

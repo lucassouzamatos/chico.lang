@@ -69,6 +69,7 @@ rewrite({integer, Line, Value}, _) -> [{integer, Line, Value}];
 rewrite({float, Line, Value}, _) -> [{float, Line, Value}];
 rewrite({string, Line, Value}, _) -> [{string, Line, Value}];
 rewrite({atom, Line, Value}, _) -> atom({atom, Line, Value});
+rewrite({atom, {declaration, Line, Value}}, _) -> [{atom, Line, Value}];
 rewrite({export, _}, _) -> [];
 % Pair is a built in then should call the kernel source code
 %
