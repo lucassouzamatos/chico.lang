@@ -1,0 +1,19 @@
+pub fun get (value) ->
+  match value with
+    ({ ~a ok port }) -> port done
+    (_) -> 1 done
+  done
+done
+
+pub fun listen () ->
+  let b = ~a binary
+  let options = [b]
+  let listening = apply ~gen_tcp.listen 4444 options done
+  
+  let ttt = apply get listening done
+  apply ~erlang.display listening done
+done
+
+pub fun start () ->
+  apply listen done
+done

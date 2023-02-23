@@ -59,6 +59,7 @@ compile_file(Source, Filename) ->
   {ok, Tokens, _} = chico_tokenizer:string(Content),
   case chico_parser:parse(Tokens) of
     {ok, Parsed} ->
+      erlang:display(Parsed),
       ParserEnv = chico_parser_env:check(Parsed),
       Translated = chico_codegen:translate(Parsed, ParserEnv),
       Forms = construct_form(Module, Translated, ParserEnv),

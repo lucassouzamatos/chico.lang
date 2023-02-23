@@ -91,6 +91,11 @@ match_declaration -> match declaration with clause_declarations done : {'$1', '$
 
 clause_declaration -> left_parenthesis value right_parenthesis open_function applications : {{guard, '$2'}, '$5'}.
 clause_declaration -> left_parenthesis declaration right_parenthesis open_function applications : {{guard, '$2'}, '$5'}.
+clause_declaration -> left_parenthesis tuple_declaration right_parenthesis open_function applications : {{guard, '$2'}, '$5'}.
+
+clause_declaration -> value open_function applications : {{guard, '$1'}, '$3'}.
+clause_declaration -> declaration open_function applications : {{guard, '$1'}, '$3'}.
+clause_declaration -> tuple_declaration open_function applications : {{guard, '$1'}, '$3'}.
 
 clause_declarations -> clause_declaration : ['$1'].
 clause_declarations -> clause_declaration clause_declarations : ['$1' | '$2'].
