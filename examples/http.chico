@@ -5,22 +5,29 @@ pub fun get_port (value) ->
   done
 done
 
-pub fun listen () ->
+pub fun get_listen_port () ->
   let b = ~a binary
   let packet = { ~a packet 0 }
   let active = { ~a active ~a false }
 
   let options = [b packet active]
-  
-  let lsocket_z = apply ~gen_tcp.listen 4444 options done
-  let lsocket_y = apply get_port lsocket_z done
-  
-  let socket_z = apply ~gen_tcp.accept lsocket_y done
-  let socket_y = apply get_port socket_z done
 
-  apply ~erlang.display socket_y done
+  let socket = apply ~gen_tcp.listen 4444 options done
+  apply get_port socket done
+done
+
+pub fun get_accept_port (listen_port) ->
+  let socket = apply ~gen_tcp.accept listen_port done
+  apply get_port socket done
+done
+
+pub fun serve () ->
+  let listen_port = apply get_listen_port done
+  let accept_port = apply get_accept_port listen_port done
+
+  apply ~erlang.display accept_port done
 done
 
 pub fun start () ->
-  apply listen done
+  apply serve done
 done
